@@ -4,18 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ankhang.entities.Account;
-import com.ankhang.repository.AccountRepository;
+import com.ankhang.entities.AccountDeomo;
+import com.ankhang.repository.AccountDemoRepository;
 
 @SpringBootTest
-public class AccountRepository_Test {
+public class AccountDemoRepository_Test {
 
 	@Autowired
-	private AccountRepository accountRepository;
+	private AccountDemoRepository accountRepository;
 	
 	@Test
 	public void saveAccount() {
-		Account account = Account.builder()
+		AccountDeomo account = AccountDeomo.builder()
 				.userName("ankhang")
 				.passWord("an@khang")
 				.build();

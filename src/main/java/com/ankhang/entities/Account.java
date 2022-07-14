@@ -1,7 +1,5 @@
 package com.ankhang.entities;
 
-
-
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -9,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -25,15 +24,25 @@ import lombok.NoArgsConstructor;
 @Table(name = "Account",uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
 public class Account implements Serializable {
 
-	private static final long serialVersionUID = 5631551876479782117L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long accountId;
+	private static final long serialVersionUID = 1359964220022834762L;
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_USER = "USER";
 	
-	@Column(name = "username", nullable = true)
+    
+
+	
+    @Id
+	@Column(name = "username", nullable = false)
 	private String userName;
 	
-	@Column(name = "password", nullable = true)
+	@Column(name = "password", length = 100, nullable = false)
 	private String passWord;
+	
+	private boolean active;
+	
+	@Column(name = "user_role",nullable = false)
+	private String userRole;
+	
+	 @OneToOne(mappedBy = "account")
+	private Account_Info account_Info;
 }
