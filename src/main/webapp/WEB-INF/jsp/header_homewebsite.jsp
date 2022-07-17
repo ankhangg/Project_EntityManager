@@ -30,7 +30,8 @@
                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin">Admin Manage</a></li>
                             </security:authorize>
                              <!-- Admin Function End -->
-                             
+                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/updateif?username=${pageContext.request.userPrincipal.name}">Account Info</a></li>
+                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/updatepassword">Change Password</a></li>
                               <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                               
                         </c:if>

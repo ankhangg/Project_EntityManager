@@ -28,8 +28,8 @@ public class Account implements Serializable {
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";
 	
-    
-
+    @Column(name = "accid")
+    private Long accId; 
 	
     @Id
 	@Column(name = "username", nullable = false)

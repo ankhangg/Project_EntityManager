@@ -5,31 +5,33 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login</title>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <!-- css -->
-      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/decorator_loginwebsite/css/styles.css"/> 
+<!-- css -->
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/decorator_loginwebsite/css/styles.css" />
 </head>
 <body>
-<div class="sidenav">
+	<div class="sidenav">
 		<div class="login-main-text">
 			<h2>
 				AN KHANG WEBISTE<br> Login Page
 			</h2>
 			<p>Login or register from here to access.</p>
-			</div>
-			</div>
+		</div>
+	</div>
 	<div class="main">
 		<div class="col-md-6 col-sm-12">
 			<div class="login-form">
-<!--         /login?error=true 
+				<!--         /login?error=true 
         /login?error=true  -->
-       <c:if test="${not empty message}">
-<div class="alert alert-${getAlert }">
-${message }
-</div>
-       </c:if>
+				<c:if test="${not empty message}">
+					<div class="alert alert-${getAlert }">${message }</div>
+				</c:if>
 				<form method="POST"
 					action="${pageContext.request.contextPath}/j_spring_security_check">
 					<div class="form-group">
@@ -42,11 +44,14 @@ ${message }
 					</div>
 					<button type="submit" class="btn btn-black">Login</button>
 				</form>
- 				<form action="regist">
+				<form action="regist">
 					<button type="submit" class="btn btn-secondary">Regist</button>
-				</form> 
-				 				<form action="home">
+				</form>
+				<form action="home">
 					<button type="submit" class="btn btn-secondary">Home</button>
+				</form>
+				<form action="forgetpassword">
+					<button type="submit" class="btn btn-secondary">Forget Password</button>
 				</form>
 			</div>
 		</div>

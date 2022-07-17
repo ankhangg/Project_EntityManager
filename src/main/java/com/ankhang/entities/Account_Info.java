@@ -28,6 +28,7 @@ public class Account_Info implements Serializable {
 
 	private static final long serialVersionUID = 1854616041744092605L;
 	@Id
+	@Column(name = "accinfoid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accinfoId;
 	

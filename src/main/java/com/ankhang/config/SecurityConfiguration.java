@@ -53,6 +53,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// Nếu chưa login, nó sẽ redirect tới trang /admin/login.
 		http.authorizeRequests().antMatchers("/admin")//
 				.access("hasRole('ROLE_ADMIN')");
+		
+	       // Nếu chưa login, nó sẽ redirect tới trang /login.
+	       http.authorizeRequests().antMatchers("/updateif","/updatepassword")//
+	       .access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')");
 
 		// Các trang chỉ dành cho MANAGER
 		//http.authorizeRequests().antMatchers("/admin/product").access("hasRole('ROLE_MANAGER')");
