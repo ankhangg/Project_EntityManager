@@ -78,14 +78,13 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean saveupdateAccountInfo(Account_Info account_Info,Long accId) {
-	  Account account = accountRepository.findByAccId(accId);
 	  String firstName = account_Info.getFirstName();
 	  String lastName = account_Info.getLastName();
 	  String address = account_Info.getAddRess();
 	  String phoneNumber = account_Info.getPhoneNumber();
 	  String email = account_Info.getEmail();
 	  try {
-		  accountInfoRepository.saveupdateAccountInfo(firstName, lastName, address, phoneNumber, email, account);
+		  accountInfoRepository.saveupdateAccountInfo(firstName, lastName, address, phoneNumber, email, accId);
 		  System.out.println("Thanh cong");
 		  return true;
 	} catch (Exception e) {

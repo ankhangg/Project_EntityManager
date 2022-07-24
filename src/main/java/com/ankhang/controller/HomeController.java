@@ -1,5 +1,7 @@
 package com.ankhang.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,43 +18,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
 import com.ankhang.entities.AccountDeomo;
+import com.ankhang.entities.CategoryProduct;
+import com.ankhang.entities.Product;
 import com.ankhang.service.AccountDemoService;
+import com.ankhang.service.ProductService;
 
 @Controller
 public class HomeController {
-    
+
 	@Autowired
-	private AccountDemoService accountService;
+	private ProductService productService;
 	
 	@GetMapping({"/home", "/"})
 	public String homew(Model model) {
         String message = "Hello Spring Boot + JSP";
-
         model.addAttribute("message", message);
+        List<Product> listProducts = productService.findAllProduct();
+        model.addAttribute("listProductForm",listProducts);
 		return "body_homewebsite";
 	}
 	
-	@GetMapping("/admin")
-	public String admin() {
-		return "body_adminwebsite";
-	}
-	
-	@GetMapping("/account")
-	public String account(@ModelAttribute("accountForm")AccountDeomo account) {
-		return "account_demo";
-	}
-	
-	@PostMapping("/account")
-	public String accountPost(Model model, @ModelAttribute("accountForm") @Validated AccountDeomo account, final RedirectAttributes redirectAttributes, BindingResult result) {
-		if (result.hasErrors()) {
-			return "body_homewebsite";
-		}
-		try {
-			accountService.saveAccountDemo(account);
-			System.out.println("Them thanh cong");
-		} catch (Exception e) {
-			System.out.println("That bai");
-		}
-		return "redirect:/home";
-	}
 }

@@ -48,7 +48,6 @@ public class Account_Info implements Serializable {
 	private String email;
 	
 	 @OneToOne(cascade = CascadeType.ALL,
-	    		fetch = FetchType.LAZY,
 	    		optional = true)
 	  @JoinColumn(name = "username", referencedColumnName = "userName")
 	private Account account;

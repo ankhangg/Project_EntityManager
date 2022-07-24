@@ -81,7 +81,7 @@ public class LoginController {
 			System.out.println("Regist Fail");
 			return "redirect:/regist?error=true&alert=danger";
 		}
-		   return "login";
+		   return "/login";
 	   }
 	   
 	   @RequestMapping(value = "/updateif", method = RequestMethod.GET)

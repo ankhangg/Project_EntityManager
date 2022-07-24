@@ -42,6 +42,48 @@
 	<jsp:include page="layoutside_adminwebsite.jsp" />
 	<!-- LayoutSide End -->
 	<div id="layoutSidenav_content">
+	<main>
+			<div class="container-fluid px-4">
+				<h1 class="mt-4">Category Product Form</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="index.html">List
+							Category</a></li>
+					<li class="breadcrumb-item active">Category</li>
+				</ol>
+				<div class="card mb-4">
+					<div class="card-body">
+						<c:if test="${not empty alertmessage}">
+							<div class="alert alert-${typealert }">${alertmessage }</div>
+						</c:if>
+                 <!-- Form Start -->
+                   <table class="table">
+    <thead>
+      <tr>
+        <th>Id Category</th>
+        <th>Code Category</th>
+        <th>Name Category</th>
+        <th>Function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach items="${listCategoryProducts }" var="l">
+      <tr>
+        <td scope="row">${l.cateprodId }</td>
+        <td>${l.cateprodCode }</td>
+          <td>${l.cateprodName }</td>
+         <td>
+          <a href="${pageContext.request.contextPath}/updatecategory?idcategory=${l.cateprodId}">Edit</a>
+          <a href="${pageContext.request.contextPath}/deletecate?idcategory=${l.cateprodId}">Delete</a> 
+         </td>
+      </tr>
+      </c:forEach>
+    </tbody>
+  </table>
+                 <!-- Form End -->
+					</div>
+				</div>
+			</div>
+		</main>
 		<!--  Footer -->
 		<jsp:include page="footer_adminwebsite.jsp" />
 		<!-- End Footer -->

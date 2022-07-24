@@ -18,26 +18,26 @@ public class AccountRepositoryTest {
 	@Autowired
 	private AccountInfoRepository accountInfoRepository;
 	
-//	@Test
-//	public void save() {
-//		Account account = Account.builder()
-//				.accId(1L)
-//				.userName("admin")
-//				.passWord("$2a$10$NLEH/bLG2crqGrxp6UaZ5utkxRe0LiYvDjxtgbjpp6aNdJNslpG26")
-//				.userRole("ROLE_ADMIN")
-//				.active(true)
-//				.build();
-//		
-//		Account_Info account_Info = Account_Info.builder()
-//				.firstName("admin")
-//				.lastName("admin")
-////				.addRess("ADMIN")
-////				.phoneNumber("0767143103")
-//				.email("admin@gmail.com")
-//				.account(account)
-//				.build();
-//		accountInfoRepository.save(account_Info);
-//	}
+	@Test
+	public void save() {
+		Account account = Account.builder()
+				.accId(1L)
+				.userName("admin")
+				.passWord("$2a$10$NLEH/bLG2crqGrxp6UaZ5utkxRe0LiYvDjxtgbjpp6aNdJNslpG26")
+				.userRole("ROLE_ADMIN")
+				.active(true)
+				.build();
+		
+		Account_Info account_Info = Account_Info.builder()
+				.firstName("admin")
+				.lastName("admin")
+//				.addRess("ADMIN")
+//				.phoneNumber("0767143103")
+				.email("admin@gmail.com")
+				.account(account)
+				.build();
+		accountInfoRepository.save(account_Info);
+	}
 	
 //	@Test
 //	public void findAccountByUsername() {

@@ -33,17 +33,21 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                
+                 <c:forEach items="${listProductForm }" var="p">
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="${pageContext.request.contextPath}/productImage?id=${p.productId}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">Fancy Product</h5>
+                                    <h5 class="fw-bolder">${p.productName }</h5>
                                     <!-- Product price-->
-                                    $40.00 - $80.00
+                                   ${p.productPrice } vnđ
+                                  <h5 class="fw-bolder">Amount:</h5>
+                                    ${p.productAmount } 
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -52,7 +56,9 @@
                             </div>
                         </div>
                          </div>
+                      </c:forEach>
                 </div>
+                
             </div>
         </section>
          <!-- Body End-->

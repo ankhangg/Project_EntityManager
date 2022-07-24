@@ -146,6 +146,13 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>4.0.4.RELEASE</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.4</version>
+</dependency>
+
 <!-- Extra Dependencies For Project End -->
 	</dependencies>
 
