@@ -19,7 +19,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,7 +30,6 @@ import java.util.List;
 @Builder
 @Table(name = "Categoryproduct")
 public class CategoryProduct implements Serializable {
-   
 
 	private static final long serialVersionUID = -2933482874751029930L;
 
@@ -43,17 +44,14 @@ public class CategoryProduct implements Serializable {
 	@Column(name = "cateprodname",nullable = false,length = 30)
 	private String cateprodName;
 	
-//	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-//	@JoinColumn(name = "cateprodid", 
-//	referencedColumnName = "cateprodId"
-//	)
-//	private List<Product> listProduct;
 	
-	@OneToMany(fetch =  FetchType.LAZY,mappedBy = "categoryProduct")
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+	@JoinColumn(name = "cateprod_id")
 	private List<Product> listProduct;
 	
 	 @Embedded
 	private InformationControl informationControl;
-	
+   
 	
 }
+	

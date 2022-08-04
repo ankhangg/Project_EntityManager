@@ -8,9 +8,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryProductInput {
+	private Long cateprodId;
 	private String  cateprodCode;
 	private String cateprodName;
 	private String createdBy;
 	private String modifiedBy;
+
+	
+	
 	
 }

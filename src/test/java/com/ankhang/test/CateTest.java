@@ -28,7 +28,7 @@ public class CateTest {
 				.productName("Laptop HP")
 				.productAmount(9L)
 				.productDescription("Đây là sản phẩm product Laptop HP")
-				.productPrice(15000000L)
+				
 				.informationControl(informationControl)
 				.build();
 		
@@ -36,7 +36,7 @@ public class CateTest {
 				.cateprodCode("IP")
 				.cateprodName("Iphone")
 				.informationControl(informationControl)
-				.listProduct(List.of(product01))
+				//.listProduct(List.of(product01))
 				.build();
 				categoryProductRepository.save(categoryProduct);
 	}

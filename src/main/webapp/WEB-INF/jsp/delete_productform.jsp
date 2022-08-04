@@ -49,7 +49,7 @@
 	<jsp:include page="layoutside_adminwebsite.jsp" />
 	<!-- LayoutSide End -->
 	<div id="layoutSidenav_content">
-	<!----------------------------- Delete Start -------------------------------->
+		<!----------------------------- Delete Start -------------------------------->
  	 <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="script.js"></script> 
@@ -64,10 +64,7 @@
                     <p>You are about to delete <b><i class="title"></i></b> record, this procedure is irreversible.</p>
                     <p>Do you want to proceed?</p>
                 </div>
-                						<c:if test="${not empty alertmessage}">
-							<div class="alert alert-${typealert }">${alertmessage }</div>
-						</c:if>
-                 <form:form modelAttribute="categorydelete" method="POST" enctype="multipart/form-data" action="deletecate">
+                 <form:form modelAttribute="productdelete" method="POST" enctype="multipart/form-data" action="deleteproduct">
                 <div class="modal-footer">
                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger btn-ok">Delete</button>
@@ -75,33 +72,40 @@
                      <div class="form-group">
   </div>
   <div class="form-group">
-    <label for="formGroupExampleInput">Id Category: ${categorydelete.cateprodId } </label>
-     <input type="hidden" class="form-control" id="formGroupExampleInput" name="cateprodId" value="${categorydelete.cateprodId }" >
+    <label for="formGroupExampleInput">Id Product: ${productdelete.productId } </label>
+     <input type="hidden" class="form-control" id="formGroupExampleInput" name="productdId" value="${productdelete.productId }" >
   </div>
   <div class="form-group">
-    <label for="formGroupExampleInput2">Code Category: ${categorydelete.cateprodCode }</label>
-    <input type="hidden" class="form-control" id="formGroupExampleInput" name="cateprodCode" value="${categorydelete.cateprodCode }" >
+    <label for="formGroupExampleInput2">Name Product: ${productdelete.productName }</label>
+    <input type="hidden" class="form-control" id="formGroupExampleInput" name="productName" value="${productdelete.productName }"/>
   </div>
    <div class="form-group">
-    <label for="formGroupExampleInput2">Name Category: ${categorydelete.cateprodName }</label>
-    <input type="hidden" class="form-control" id="formGroupExampleInput" name="cateprodName" value="${categorydelete.cateprodName }" >
+    <label for="formGroupExampleInput2">Price Product: ${productdelete.productPrice }</label>
+    <input type="hidden" class="form-control" id="formGroupExampleInput" name="productPridce" value="${productdelete.productPrice }" >
+  </div>
+<!--   Hidden Start -->
+     <div class="form-group">
+   <%--   <form:input type="hidden" class="form-control" id="formGroupExampleInput" path="categoryProduct" value="${productdelete.categoryProduct }" /> --%>
+      <input type="hidden" class="form-control" id="formGroupExampleInput" name="productId" value="${productId}"> 
+  </div>
+  <!--   Hidden End -->
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Image Product</label>
+  </div>
+    <td><img  src="${pageContext.request.contextPath}/productImage?id=${productdelete.productId}" width="100"/></td>
+     <div class="form-group">
   </div>
      <div class="form-group">
   </div>
-  								<!-- Not show on screen start -->
-                                         <div class="col">
-                                       <form:hidden path="cateprodId" value="${cateId}"/>
-                                            </div> 
-								<!-- Not show on screen end -->
                 </form:form>
             </div>
         </div>
     </div>
     <br />
-    <button class="btn btn-default" data-record-id="54" data-record-title="${categorydelete.cateprodName }" data-toggle="modal" data-target="#confirm-delete">
-       Delete Name Item: ${categorydelete.cateprodName }
+    <button class="btn btn-default" data-record-id="54" data-record-title="${productdelete.productName }" data-toggle="modal" data-target="#confirm-delete">
+       Delete Name Item: ${productdelete.productName }
     </button>
-    <a href="${pageContext.request.contextPath}/showcate">Back</a>
+    <a href="${pageContext.request.contextPath}/showproductadmin">Back</a>
     <script>
         $('#confirm-delete').on('click', '.btn-ok', function(e) {
             var $modalDiv = $(e.delegateTarget);

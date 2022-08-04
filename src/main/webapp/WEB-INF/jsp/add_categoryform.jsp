@@ -32,6 +32,7 @@
 	crossorigin="anonymous"></script>
 <script
 	src="<c:url value='/decorator_adminwebsite/js/datatables-simple-demo.js' />"></script>
+	 <script src="<c:url value='/decorator_adminwebsite/js/scripts2.js' />"></script>
 </head>
 <!-- Header-->
 <jsp:include page="header_adminwebsite.jsp" />
@@ -46,7 +47,7 @@
 			<div class="container-fluid px-4">
 				<h1 class="mt-4">Category Product Form</h1>
 				<ol class="breadcrumb mb-4">
-					<li class="breadcrumb-item"><a href="index.html">Manage
+					<li class="breadcrumb-item"><a href="index.html">Input
 							Category</a></li>
 					<li class="breadcrumb-item active">Category</li>
 				</ol>

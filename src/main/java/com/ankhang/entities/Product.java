@@ -1,6 +1,9 @@
 package com.ankhang.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,33 +45,20 @@ public class Product implements Serializable {
 	@Column(name = "prodamount",nullable = true)
 	private Long productAmount;
 	
-	@Column(name = "proddescription", nullable = true, length = 200 )
+	@Column(name = "proddescription", nullable = true, length = 900 )
 	private String productDescription;
 	
 	@Column(name = "prodprice",nullable = true) 
-	private Long productPrice;
+	private BigDecimal productPrice;
 	
 	@Lob
-	@Column(name = "prodthumnail", length = Integer.MAX_VALUE, nullable = true)
+	@Column(name = "prodthumnail", nullable = true)
 	private byte[] productThumbnail;
-	
-	
-//	   @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-//	   @JoinColumn(
-//			   name = "cateprodid",
-//			   referencedColumnName = "cateprodId",
-//			   nullable = true
-//			   )
-//	private CategoryProduct categoryProduct;
-	
+
 	   @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	   @JoinColumn(
-			   name = "cateprod_id",
-			   referencedColumnName = "cateprodId"
-			   )
+	   @JoinColumn(name = "cateprod_id")
 	private CategoryProduct categoryProduct;
-	
-	
-	 @Embedded
+
+	@Embedded
 	private InformationControl informationControl;
 }

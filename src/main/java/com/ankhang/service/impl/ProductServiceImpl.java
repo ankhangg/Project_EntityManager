@@ -1,10 +1,14 @@
 package com.ankhang.service.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,6 @@ import com.ankhang.repository.ProductRepository;
 import com.ankhang.service.ProductService;
 
 @Component
-@Transactional
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -31,10 +34,13 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private CategoryProductRepository categoryProductRepository;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 
+	@Transactional
 	@Override
-	public boolean saveProduct(ProductInput productInput, Long cateId, String createdBy) {
-	  CategoryProduct thisCategoryProduct = categoryProductRepository.findById(cateId).get();
+	public boolean saveProduct(ProductInput productInput, String createdBy, Long cateId) {	  
 	  InformationControl informationControl = new InformationControl();
 	  informationControl.setCreatedDate(new Date());
 	  informationControl.setCreatedBy(createdBy);
@@ -43,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
       product.setProductAmount(productInput.getProductAmount());
       product.setProductDescription(productInput.getProductDescription());
       product.setProductPrice(productInput.getProductPrice());
-      product.setCategoryProduct(thisCategoryProduct);
+      
       if (productInput.getFileData() != null) {
 		byte[] image = null;
 		try {
@@ -55,28 +61,95 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
       product.setInformationControl(informationControl);
-      
+      CategoryProduct categoryProduct = categoryProductRepository.findCateById(cateId);
+      product.setCategoryProduct(categoryProduct);
       try {
-    	  productRepository.save(product);
+   	 productRepository.save(product);
     	  return true;
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-     
+
+      
       return false;
 	}
 
 
 	@Override
 	public Product findByIdProduct(Long id) {
-		Product product = productRepository.findById(id).get();
+		Product product = productRepository.findProbyId(id);
 		return product;
 	}
 
 
 	@Override
 	public List<Product> findAllProduct() {
-		return productRepository.findAll();
+		return productRepository.findAllProduct();
+	}
+
+
+	@Override
+	public boolean deleteProduct(Product product) {
+		try {
+			productRepository.delete(product);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+	@Override
+	public List<Product> findAllProductWithCate() {
+		return productRepository.findAllProductWithCate();
+	}
+
+
+	@Override
+	public Product findByIdProductWithCate(Long id) {
+		Product product = productRepository.findProbyIdWithCate(id);
+		return product;
+	}
+
+
+	@Override
+	public boolean updateProduct(ProductInput productInput) {
+	String prodName = productInput.getProductName();
+	Long prodAmount = productInput.getProductAmount();
+	BigDecimal productPrice = productInput.getProductPrice();
+	Date modifiDate = new Date();
+    String productDescription = productInput.getProductDescription();
+    
+    String modifiedBy = productInput.getModifiedBy();
+    Long cateId = productInput.getIdCategory();
+    Long productId = productInput.getProductId();
+	byte[] image = null;
+	
+    if (productInput.getFileData() != null) {
+    	byte[] test = null;
+		try {
+			test = productInput.getFileData().getBytes();
+		} catch (Exception e) {
+		}
+		if (test != null && test.length>0) {
+			image = test;
+		}
+		else {
+			image = productInput.getProductThumbnail();
+		}
+    }
+
+		
+		
+    CategoryProduct categoryProduct = categoryProductRepository.findCateById(cateId);
+		try {
+			productRepository.updateProduct(prodName, prodAmount, productPrice, image, categoryProduct, modifiedBy, modifiDate, productDescription, productId);
+			return true;
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		return false;
 	}
 
 

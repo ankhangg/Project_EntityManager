@@ -4,12 +4,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.ankhang.entities.CategoryProduct;
 import com.ankhang.entities.Product;
 import com.ankhang.model.ProductInput;
 
 @Component
 public interface ProductService {
-  boolean saveProduct(ProductInput productInput, Long cateId, String createdBy);
+  boolean saveProduct(ProductInput productInput, String createdBy, Long cateId);
   Product findByIdProduct(Long id);
   List<Product> findAllProduct();
+  List<Product> findAllProductWithCate();
+  boolean deleteProduct(Product product);
+  Product findByIdProductWithCate(Long id);
+  boolean updateProduct(ProductInput productInput);
 }

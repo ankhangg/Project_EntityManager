@@ -1,9 +1,12 @@
 package com.ankhang.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -39,7 +42,6 @@ public class ProductRepositoryTest {
 				.productName("Laptop HP")
 				.productAmount(9L)
 				.productDescription("Đây là sản phẩm product Laptop HP")
-				.productPrice(15000000L)
 				.informationControl(informationControl)
 				.build();
 		
@@ -50,6 +52,7 @@ public class ProductRepositoryTest {
 				.listProduct(List.of(product01))
 				.build();
 				categoryProductRepository.save(categoryProduct);
+				
 	}
 
 	
@@ -85,7 +88,12 @@ public class ProductRepositoryTest {
 //		
 //		CategoryProduct categoryProduct2 = categoryProductRepository.save(categoryProduct);
 //		Assertions.assertThat(categoryProduct2.getListProduct()).isEqualTo(List.of(product01));
-//		
 //	}
 	
+//	@Test
+//	public void findAllCate(){
+//       Product product = productRepository.findById(1L).get();
+//       System.out.println(product);
+//	}
+//	
 }

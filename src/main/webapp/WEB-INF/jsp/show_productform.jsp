@@ -42,47 +42,52 @@
 	<jsp:include page="layoutside_adminwebsite.jsp" />
 	<!-- LayoutSide End -->
 	<div id="layoutSidenav_content">
-	<!----------------------------------------- Form Catrgory Start --------------------------------->
 	<main>
 			<div class="container-fluid px-4">
-				<h1 class="mt-4">Category Product Form</h1>
+				<h1 class="mt-4">List Product Form</h1>
 				<ol class="breadcrumb mb-4">
-					<li class="breadcrumb-item"><a href="index.html">Manage
-							Category</a></li>
-					<li class="breadcrumb-item active">Category</li>
+					<li class="breadcrumb-item"><a href="index.html">List
+							Product</a></li>
+					<li class="breadcrumb-item active">Product</li>
 				</ol>
 				<div class="card mb-4">
 					<div class="card-body">
 						<c:if test="${not empty alertmessage}">
 							<div class="alert alert-${typealert }">${alertmessage }</div>
 						</c:if>
-						<form:form modelAttribute="categoryupdate" enctype="multipart/form-data" method="POST" action="updatecategory"> 
-							<div class="row">
-								<div class="col">
-									<form:input path="cateprodCode" type="text" class="form-control" placeholder="Category Code" />
-								</div>
-								<div class="col">
-									<form:input path="cateprodName" type="text" class="form-control" placeholder="Category Name" />
-								</div>
-								<!-- Not show on screen start -->
-                                         <div class="col">
-                                        <form:hidden path="cateprodId"/>
-                                            </div> 
-                                       <div class="col">
-                                       <form:hidden path="modifiedBy" value="${pageContext.request.userPrincipal.name}"/>
-                                            </div>
-								<!-- Not show on screen end -->
-								<div class="col">
-									<button type="submit" class="btn btn-primary">Update
-										Category</button>
-								</div>
-							</div>
-						</form:form>
+                 <!-- Form Start -->
+                   <table class="table">
+    <thead>
+      <tr>
+        <th>Id Product</th>
+        <th>Name Product</th>
+        <th>Price Product</th>
+        <th>Amount Product</th>
+        <th>Category Product</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach items="${listProductForm }" var="p">
+      <tr>
+        <td scope="row">${p.productId }</td>
+        <td>${p.productName }</td>
+          <td>${p.productPrice }</td>
+          <td>${p.productAmount }</td>
+          <td>${p.categoryProduct.cateprodName }</td> 
+          
+         <td>
+          <a href="${pageContext.request.contextPath}/updateproduct?idproduct=${p.productId}">Edit</a>
+          <a href="${pageContext.request.contextPath}/deleteproduct?idproduct=${p.productId}">Delete</a> 
+         </td>
+      </tr>
+      </c:forEach>
+    </tbody>
+  </table>
+                 <!-- Form End -->
 					</div>
 				</div>
 			</div>
 		</main>
-	<!----------------------------------------- Form Catrgory End --------------------------------->	
 		<!--  Footer -->
 		<jsp:include page="footer_adminwebsite.jsp" />
 		<!-- End Footer -->

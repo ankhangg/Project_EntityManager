@@ -71,7 +71,7 @@ public class LoginController {
 	   
 	   @RequestMapping(value = "/regist", method = RequestMethod.POST)
 	   @Transactional(propagation = Propagation.NEVER)
-	   public String createAcountPost(Model model, @ModelAttribute("accountRegistForm") @Validated Account_Register account_Register,final RedirectAttributes redirectAttributes, BindingResult result){
+	   public String createAcountPost(Model model, @ModelAttribute("accountRegistForm") @Validated Account_Register account_Register, final RedirectAttributes redirectAttributes,BindingResult result){
 		   if (result.hasErrors()) {
 			return "/login";
 		}
@@ -112,7 +112,7 @@ public class LoginController {
 	   
 	   @RequestMapping(value = "/updateif", method = RequestMethod.POST)
 	   @Transactional(propagation = Propagation.NEVER)
-	   public String updateInfoAccountPost(Model model, @ModelAttribute("accountInfoForm") @Validated Account_Info account_Info, final RedirectAttributes redirectAttributes, BindingResult result){
+	   public String updateInfoAccountPost(Model model, @ModelAttribute("accountInfoForm") @Validated Account_Info account_Info,final RedirectAttributes redirectAttributes,BindingResult result){
 		   Long accId = account_Info.getAccinfoId();
 		   if (result.hasErrors()) {
 			return "/home";
@@ -147,7 +147,7 @@ public class LoginController {
 
 	   @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
 	   @Transactional(propagation = Propagation.NEVER)
-	   public String changePasswordPost(Model model, @ModelAttribute("accountPassForm") @Validated Account_ChangePassword account_ChangePassword ,final RedirectAttributes redirectAttributes, BindingResult result){
+	   public String changePasswordPost(Model model, @ModelAttribute("accountPassForm") @Validated Account_ChangePassword account_ChangePassword,final RedirectAttributes redirectAttributes,BindingResult result){
 		   if (result.hasErrors()) {
 			return "/updatepassword";
 		}
@@ -180,7 +180,7 @@ public class LoginController {
 	   
 	   @RequestMapping(value = "/forgetpassword", method = RequestMethod.POST)
 	   @Transactional(propagation = Propagation.NEVER)
-	   public String forgetPasswordPost(Model model, @ModelAttribute("accountForgetPassForm") @Validated Account_ForgetPassword account_ForgetPassword,final RedirectAttributes redirectAttributes, BindingResult result){
+	   public String forgetPasswordPost(Model model, @ModelAttribute("accountForgetPassForm") @Validated Account_ForgetPassword account_ForgetPassword,final RedirectAttributes redirectAttributes,BindingResult result){
 		   if (result.hasErrors()) {
 			return "/login";
 		}

@@ -61,7 +61,7 @@
 						<c:if test="${not empty alertmessage}">
 							<div class="alert alert-${typealert }">${alertmessage }</div>
 						</c:if>
-						<form:form modelAttribute="productinputform" enctype="multipart/form-data" method="POST" action="addproduct">
+						<form:form modelAttribute="productupdate" enctype="multipart/form-data" method="POST" action="updateproduct">
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="inputEmail4">Product Name</label> <form:input type="text" path="productName"
@@ -82,9 +82,10 @@
 											placeholder="Input Product Price" /> 
 								</div> 
 								<div class="form-group col-md-4">
-									<label for="inputState">Category</label> <form:select
+									<label for="inputState">Category</label> 
+									<form:select
 										class="custom-select" path="idCategory">
-										<option selected>Choose Category</option>
+										<option selected value="${idCate}">${nameCate}</option>
 										 <c:forEach var="cate" items="${listCategoryProducts}">
 										<option  value="${cate.cateprodId }">${cate.cateprodName }</option>
 										</c:forEach>
@@ -98,15 +99,19 @@
 									</div>
 									<!-- Input File Start -->
  									<div class="custom-file">
-										<h5>Category Image</h5>
+										<h5>Product Image</h5>
 										<%-- <form:input type="file" class="custom-file-input" id="customFile" path="thumbNail"/> --%>
+										    <td><img  src="${pageContext.request.contextPath}/productImage?id=${productupdate.productId}" width="100"/></td>
 										    <form:input type="file" path="fileData"/>
 									</div>
 									<!-- Input File End -->
 								</div>
 								<!---- Not Show On Screen Start ---->
 								  <div class="col">
-                                       <form:hidden path="createdBy" value="${pageContext.request.userPrincipal.name}"/>
+                                       <form:hidden path="modifiedBy" value="${pageContext.request.userPrincipal.name}"/>
+                                       <%-- <form:hidden path="productId" value="${productId}"/> --%>
+                                       <form:hidden path="productId"/>
+                                        <form:hidden path="productThumbnail"/>
                                             </div>
 								<!---- Not Show On Screen End ---->
 								

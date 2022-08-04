@@ -85,7 +85,8 @@
 <dependency>
     <groupId>org.hibernate</groupId>
     <artifactId>hibernate-core</artifactId>
-    <version>5.6.10.Final</version>
+    <version>6.0.1.Final</version>
+    <type>pom</type>
 </dependency>
 <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
 <dependency>
@@ -93,7 +94,6 @@
     <artifactId>hibernate-entitymanager</artifactId>
     <version>5.6.10.Final</version>
 </dependency>
-
 <!-- Config SpringBoot -->
 		<!-- SQL Server -->
 		<dependency>

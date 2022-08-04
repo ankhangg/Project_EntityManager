@@ -30,12 +30,19 @@ public class HomeController {
 	private ProductService productService;
 	
 	@GetMapping({"/home", "/"})
-	public String homew(Model model) {
+	public String home(Model model) {
         String message = "Hello Spring Boot + JSP";
         model.addAttribute("message", message);
         List<Product> listProducts = productService.findAllProduct();
         model.addAttribute("listProductForm",listProducts);
 		return "body_homewebsite";
+	}
+	
+	@GetMapping("/showproduct")
+	public String showproduct(Model model, @RequestParam(value = "idproduct", defaultValue = "0") Long id ) {
+		Product product = productService.findByIdProduct(id);
+		model.addAttribute("detailProduct",product);
+		return "detailproduct_homewebsite";
 	}
 	
 }
