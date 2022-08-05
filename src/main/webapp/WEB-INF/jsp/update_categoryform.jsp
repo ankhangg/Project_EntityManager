@@ -11,6 +11,11 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Admin Page</title>
+<style type="text/css">
+  .error{
+  color: red
+  }
+</style>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
 	rel="stylesheet" />
@@ -60,9 +65,11 @@
 							<div class="row">
 								<div class="col">
 									<form:input path="cateprodCode" type="text" class="form-control" placeholder="Category Code" />
+									<form:errors path="cateprodCode" class="error"/>
 								</div>
 								<div class="col">
 									<form:input path="cateprodName" type="text" class="form-control" placeholder="Category Name" />
+									<form:errors path="cateprodName" class="error"/>
 								</div>
 								<!-- Not show on screen start -->
                                          <div class="col">

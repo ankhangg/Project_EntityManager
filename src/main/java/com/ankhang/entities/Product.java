@@ -29,7 +29,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Product",uniqueConstraints={@UniqueConstraint(columnNames={"prodname"})})
+//@Table(name = "Product",uniqueConstraints={@UniqueConstraint(columnNames={"prodname"})})
+@Table(name = "Product")
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 4452587222820500863L;
@@ -39,7 +40,7 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 	
-	@Column(name = "prodname", length = 100, nullable = true)
+	@Column(name = "prodname", length = 100, nullable = true,unique=true)
 	private String  productName;
 	
 	@Column(name = "prodamount",nullable = true)

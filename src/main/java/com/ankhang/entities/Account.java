@@ -21,7 +21,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Account",uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
+//@Table(name = "Account",uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
+@Table(name =  "Account")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1359964220022834762L;
@@ -32,7 +33,7 @@ public class Account implements Serializable {
     private Long accId; 
 	
     @Id
-	@Column(name = "username", nullable = false)
+	@Column(name = "username", nullable = false,unique=true)
 	private String userName;
 	
 	@Column(name = "password", length = 100, nullable = false)

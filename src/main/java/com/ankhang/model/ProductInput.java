@@ -22,6 +22,7 @@ public class ProductInput {
 	private String productDescription;
 	private BigDecimal productPrice;
 	private MultipartFile fileData;
+	private MultipartFile fileDataUpdateCanNull;
 	
 	private String createdBy;
 	private String modifiedBy;

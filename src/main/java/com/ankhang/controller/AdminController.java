@@ -1,6 +1,7 @@
 package com.ankhang.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +87,7 @@ public class AdminController {
     	model.addAttribute("error",error);
     	model.addAttribute("alert",alert);
     	if ("true".equals(error)) {
-    		model.addAttribute("alertmessage","Error: Fields can not be blank");
+    		model.addAttribute("alertmessage","Error: Category Code Value Already Exists");
 		}
     	if ("danger".equals(alert)) {
 			model.addAttribute("typealert","danger");
@@ -98,9 +99,9 @@ public class AdminController {
 	
 	 @RequestMapping(value = "/addcategory", method = RequestMethod.POST)
 	   @Transactional(propagation = Propagation.NEVER)
-	   public String createAcountPost(Model model, @ModelAttribute("categoryForm") @Validated  CategoryProductInput categoryProductInput,final RedirectAttributes redirectAttributes,BindingResult result){
+	   public String createAcountPost(Model model, @ModelAttribute("categoryForm") @Validated  CategoryProductInput categoryProductInput,BindingResult result,final RedirectAttributes redirectAttributes){
 		   if (result.hasErrors()) {
-			return "body_adminwebsite";
+			   return "add_categoryform";
 		}
 		   if (categoryProductService.saveCategoryProd(categoryProductInput) == true) {
 			   System.out.println("Add Category Success");
@@ -168,7 +169,7 @@ public class AdminController {
 	    	model.addAttribute("error",error);
 	    	model.addAttribute("alert",alert);
 	    	if ("true".equals(error)) {
-	    		model.addAttribute("alertmessage","Error: Fields can not be blank");
+	    		model.addAttribute("alertmessage","Error: Category Code Value Already Exists");
 			}
 	    	if ("danger".equals(alert)) {
 				model.addAttribute("typealert","danger");
@@ -184,11 +185,11 @@ public class AdminController {
 	         return "update_categoryform";
 	   }
 	 
-	 @PostMapping("/updatecategory")
+	 @RequestMapping(value = "/updatecategory", method = RequestMethod.POST)
 	 @Transactional(propagation = Propagation.NEVER)
-	 public String updatecategoryPost(Model model, @ModelAttribute("categoryupdate")@Validated CategoryProductInput categoryProductInput,final RedirectAttributes redirectAttributes,BindingResult result) {
+	 public String updatecategoryPost(Model model, @ModelAttribute("categoryupdate")@Validated CategoryProductInput categoryProductInput,BindingResult result,final RedirectAttributes redirectAttributes) {
 		   if (result.hasErrors()) {
-			return "body_adminwebsite";
+			return "update_categoryform";
 		}
 		   if (categoryProductService.updateCategoryProduct(categoryProductInput) == true) {
 			   System.out.println("Update Success");
@@ -207,7 +208,7 @@ public class AdminController {
 	    	model.addAttribute("error",error);
 	    	model.addAttribute("alert",alert);
 	    	if ("true".equals(error)) {
-	    		model.addAttribute("alertmessage","Error: Fields can not be blank");
+	    		model.addAttribute("alertmessage","Error: Product Name Value Already Exists");
 			}
 	    	if ("danger".equals(alert)) {
 				model.addAttribute("typealert","danger");
@@ -216,17 +217,25 @@ public class AdminController {
 			 model.addAttribute("listCategoryProducts",CategoryProducts);
              ProductInput productInput = new ProductInput();
              model.addAttribute("productinputform",productInput);
+             
+             Long value= 0L;
+             BigDecimal proudPrice = BigDecimal.valueOf(value);
+             model.addAttribute("proudPrice",proudPrice);
+             
+             Long prodAmount = 0L;
+             model.addAttribute("prodAmount",prodAmount);
+             
 	         return "add_productform";
 	   }
 		
 		 @RequestMapping(value = "/addproduct", method = RequestMethod.POST)
-		   public String saveproductPost(Model model, @ModelAttribute("productinputform") @Validated  ProductInput productInput,final RedirectAttributes redirectAttributes,BindingResult result){
+		   public String saveproductPost(Model model, @ModelAttribute("productinputform") @Validated  ProductInput productInput,BindingResult result,final RedirectAttributes redirectAttributes){
 			   if (result.hasErrors()) {
-				   return "redirect:/addproduct?error=true&alert=danger";
+			    	 List<CategoryProduct> CategoryProducts = categoryProductService.findAllCategory();
+					 model.addAttribute("listCategoryProducts",CategoryProducts);
+				   return "add_productform";
 			}
-			   Long cateId = productInput.getIdCategory();
-			   String createdBy = productInput.getCreatedBy();
-			   if ( productService.saveProduct(productInput, createdBy, cateId)== true) {
+			   if ( productService.saveProduct(productInput)== true) {
 				   System.out.println("Add Product Success");
 			} else {
 				System.out.println("Add Product Fail");
@@ -335,9 +344,16 @@ public class AdminController {
 		 
 		 @PostMapping("/updateproduct")
 		 @Transactional(propagation = Propagation.NEVER)
-		 public String updateProductPost(Model model, @ModelAttribute("productupdate")@Validated ProductInput productInput,final RedirectAttributes redirectAttributes,BindingResult result) {
+		 public String updateProductPost(Model model, @ModelAttribute("productupdate")@Validated ProductInput productInput,BindingResult result,final RedirectAttributes redirectAttributes) {
 			   if (result.hasErrors()) {
-				return "body_adminwebsite";
+				   CategoryProduct categoryProduct = categoryProductService.findCategorybyId(productInput.getIdCategory());
+			    	String nameCate= categoryProduct.getCateprodName();
+			    	model.addAttribute("idCate",productInput.getIdCategory());
+			    	model.addAttribute("nameCate",nameCate);
+			    	
+			    List<CategoryProduct> CategoryProducts = categoryProductService.findAllCategory();
+			    model.addAttribute("listCategoryProducts",CategoryProducts);
+				return "update_productform";
 			}
 			   if (productService.updateProduct(productInput) == true) {
 				   System.out.println("Update Success");

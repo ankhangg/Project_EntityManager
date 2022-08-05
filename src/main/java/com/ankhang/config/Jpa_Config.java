@@ -11,6 +11,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -78,4 +79,13 @@ public class Jpa_Config {
 		// we can add 
 		return properties;
 	}
+	
+	   @Bean
+	   public ResourceBundleMessageSource messageSource() {
+	      ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
+	      // Load property in message/validator.properties
+	      rb.setBasenames(new String[] { "message/validator"});
+	      rb.setDefaultEncoding("UTF-8");
+	      return rb;
+	   }
 }

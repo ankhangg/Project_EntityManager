@@ -40,10 +40,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Transactional
 	@Override
-	public boolean saveProduct(ProductInput productInput, String createdBy, Long cateId) {	  
+	public boolean saveProduct(ProductInput productInput) {	  
 	  InformationControl informationControl = new InformationControl();
 	  informationControl.setCreatedDate(new Date());
-	  informationControl.setCreatedBy(createdBy);
+	  informationControl.setCreatedBy(productInput.getCreatedBy());
       Product product = new Product();
       product.setProductName(productInput.getProductName());
       product.setProductAmount(productInput.getProductAmount());
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
       product.setInformationControl(informationControl);
-      CategoryProduct categoryProduct = categoryProductRepository.findCateById(cateId);
+      CategoryProduct categoryProduct = categoryProductRepository.findCateById(productInput.getIdCategory());
       product.setCategoryProduct(categoryProduct);
       try {
    	 productRepository.save(product);
@@ -126,10 +126,10 @@ public class ProductServiceImpl implements ProductService {
     Long productId = productInput.getProductId();
 	byte[] image = null;
 	
-    if (productInput.getFileData() != null) {
+    if (productInput.getFileDataUpdateCanNull() != null) {
     	byte[] test = null;
 		try {
-			test = productInput.getFileData().getBytes();
+			test = productInput.getFileDataUpdateCanNull().getBytes();
 		} catch (Exception e) {
 		}
 		if (test != null && test.length>0) {

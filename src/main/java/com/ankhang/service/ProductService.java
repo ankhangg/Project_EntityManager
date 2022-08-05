@@ -10,7 +10,7 @@ import com.ankhang.model.ProductInput;
 
 @Component
 public interface ProductService {
-  boolean saveProduct(ProductInput productInput, String createdBy, Long cateId);
+  boolean saveProduct(ProductInput productInput);
   Product findByIdProduct(Long id);
   List<Product> findAllProduct();
   List<Product> findAllProductWithCate();

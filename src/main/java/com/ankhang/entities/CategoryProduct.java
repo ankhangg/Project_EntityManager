@@ -38,7 +38,8 @@ public class CategoryProduct implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cateprodId;
 	
-	@Column(name = "cateprodcode",nullable = false,length = 10)
+
+	@Column(name = "cateprodcode",nullable = false,length = 10,unique=true)
 	private String  cateprodCode;
 	
 	@Column(name = "cateprodname",nullable = false,length = 30)

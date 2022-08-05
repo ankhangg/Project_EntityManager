@@ -11,6 +11,11 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Admin Page</title>
+<style type="text/css">
+  .error{
+  color: red
+  }
+</style>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
 	rel="stylesheet" />
@@ -66,12 +71,14 @@
 								<div class="form-group col-md-6">
 									<label for="inputEmail4">Product Name</label> <form:input type="text" path="productName"
 										class="form-control" id="inputEmail4" placeholder="Input Product Name"/>
+										<form:errors path="productName" class="error"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="form-group">
     <label for="exampleFormControlTextarea1">Product Description</label>
     <form:textarea path="productDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Input Product Description"></form:textarea>
+    <form:errors path="productDescription" class="error"/>
   </div>
 							</div>
 							<div class="form-row">
@@ -79,28 +86,31 @@
 									 <label for="inputCity">Product Price</label> 
 								<form:input type="number" data-type="currency" path="productPrice" 
 											class="form-control" id="inputZip"
-											placeholder="Input Product Price" /> 
+											placeholder="Input Product Price" value="${proudPrice}"/> 
+											<form:errors path="productPrice" class="error"/>
 								</div> 
 								<div class="form-group col-md-4">
 									<label for="inputState">Category</label> <form:select
 										class="custom-select" path="idCategory">
-										<option selected>Choose Category</option>
+										<option selected value="0">Choose Category</option>
 										 <c:forEach var="cate" items="${listCategoryProducts}">
 										<option  value="${cate.cateprodId }">${cate.cateprodName }</option>
 										</c:forEach>
 									</form:select>
+									<form:errors path="idCategory" class="error"/>
 									</div>
 									<div class="form-group col-md-2">
 										<label for="inputZip">Product Amount</label>
 										<form:input type="number" path="productAmount"
 											class="form-control" id="inputZip"
-											placeholder="Input Product Amount" />
+											placeholder="Input Product Amount" value="${prodAmount}"/>
 									</div>
 									<!-- Input File Start -->
  									<div class="custom-file">
 										<h5>Category Image</h5>
 										<%-- <form:input type="file" class="custom-file-input" id="customFile" path="thumbNail"/> --%>
 										    <form:input type="file" path="fileData"/>
+										    <form:errors path="fileData" class="error"/>
 									</div>
 									<!-- Input File End -->
 								</div>

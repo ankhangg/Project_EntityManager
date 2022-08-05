@@ -11,6 +11,11 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Admin Page</title>
+<style type="text/css">
+  .error{
+  color: red
+  }
+</style>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
 	rel="stylesheet" />
@@ -66,12 +71,14 @@
 								<div class="form-group col-md-6">
 									<label for="inputEmail4">Product Name</label> <form:input type="text" path="productName"
 										class="form-control" id="inputEmail4" placeholder="Input Product Name"/>
+										<form:errors path="productName" class="error"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="form-group">
     <label for="exampleFormControlTextarea1">Product Description</label>
     <form:textarea path="productDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Input Product Description"></form:textarea>
+     <form:errors path="productDescription" class="error"/>
   </div>
 							</div>
 							<div class="form-row">
@@ -80,6 +87,7 @@
 								<form:input type="number" data-type="currency" path="productPrice" 
 											class="form-control" id="inputZip"
 											placeholder="Input Product Price" /> 
+								<form:errors path="productPrice" class="error"/>
 								</div> 
 								<div class="form-group col-md-4">
 									<label for="inputState">Category</label> 
@@ -90,6 +98,7 @@
 										<option  value="${cate.cateprodId }">${cate.cateprodName }</option>
 										</c:forEach>
 									</form:select>
+									<form:errors path="idCategory" class="error"/>
 									</div>
 									<div class="form-group col-md-2">
 										<label for="inputZip">Product Amount</label>
@@ -102,7 +111,7 @@
 										<h5>Product Image</h5>
 										<%-- <form:input type="file" class="custom-file-input" id="customFile" path="thumbNail"/> --%>
 										    <td><img  src="${pageContext.request.contextPath}/productImage?id=${productupdate.productId}" width="100"/></td>
-										    <form:input type="file" path="fileData"/>
+										    <form:input type="file" path="fileDataUpdateCanNull"/>
 									</div>
 									<!-- Input File End -->
 								</div>
