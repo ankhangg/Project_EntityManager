@@ -24,9 +24,9 @@ public class API_HomeController {
 	  try {
 		  accountService.saveAccountDemo(account);
 		  System.out.println("Them thanh cong");
-		  System.out.println("Thông tin account: "+account);
+		  System.out.println("Thông tin account: "+account); //hoho
 	} catch (Exception e) {
-		System.out.println("That bai");
+		System.out.println("That bai"); 
 	}
 	}
 }
