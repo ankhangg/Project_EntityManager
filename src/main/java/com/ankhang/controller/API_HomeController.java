@@ -22,7 +22,7 @@ public class API_HomeController {
 	@ResponseBody
 	public void saveAPI(@RequestBody AccountDeomo account) {
 	  try {
-		  accountService.saveAccountDemo(account);
+		  accountService.saveAccountDemo(account);//hoho04
 		  System.out.println("Them thanh cong"); //hoho03
 		  System.out.println("Thông tin account: "+account); //hoho
 	} catch (Exception e) {
