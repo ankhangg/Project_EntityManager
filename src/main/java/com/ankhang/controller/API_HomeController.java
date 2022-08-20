@@ -26,7 +26,7 @@ public class API_HomeController {
 		  System.out.println("Them thanh cong");
 		  System.out.println("Thông tin account: "+account);
 	} catch (Exception e) {
-		System.out.println("That bai");
+		System.out.println("That bai"); //hehhe
 	}
 	}
 }
