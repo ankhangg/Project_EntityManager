@@ -8,7 +8,7 @@ import com.ankhang.entities.CategoryProduct;
 import com.ankhang.entities.Product;
 import com.ankhang.model.ProductInput;
 
-@Component
+
 public interface ProductService {
   boolean saveProduct(ProductInput productInput);
   Product findByIdProduct(Long id);

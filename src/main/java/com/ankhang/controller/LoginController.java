@@ -38,9 +38,31 @@ public class LoginController {
             if ("true".equals(error)) {
 				model.addAttribute("message","Username or Password not correct");
 			}
+            if ("errorcart".equals(error)) {
+				model.addAttribute("message","Must Login to Add Cart");
+			}
             if ("danger".equals(alert)) {
             	model.addAttribute("getAlert","danger");
 			}
+            
+            if ("successregist".equals(error)) {
+				model.addAttribute("message","Regist Success");
+			}
+            if ("primary".equals(alert)) {
+            	model.addAttribute("getAlert","primary");
+			}
+            
+            if ("successpassword".equals(error)) {
+				model.addAttribute("message","Change Password Success");
+			}
+            if ("success".equals(alert)) {
+            	model.addAttribute("getAlert","success");
+			}
+            
+            if ("successforgetpass".equals(error)) {
+				model.addAttribute("message","Take Back Password Success");
+			}
+            
     	return "login";
     }
 	
@@ -81,7 +103,7 @@ public class LoginController {
 			System.out.println("Regist Fail");
 			return "redirect:/regist?error=true&alert=danger";
 		}
-		   return "/login";
+		   return "redirect:/login?error=successregist&alert=primary";	
 	   }
 	   
 	   @RequestMapping(value = "/updateif", method = RequestMethod.GET)
@@ -121,9 +143,8 @@ public class LoginController {
 			   System.out.println("Update Info Success");
 		} else {
 			System.out.println("Update Info Fail");
-			return "redirect:/updateif?error=true&alert=danger";
 		}
-		   return "redirect:/home";
+		   return "redirect:/home?error=successudinfo&alert=primary";
 	   }
 	   
 	   @GetMapping("/updatepassword")
@@ -157,7 +178,7 @@ public class LoginController {
 			System.out.println("Update Password Fail");
 			return "redirect:/updatepassword?error=true&alert=danger";
 		}
-		   return "login";
+		   return "redirect:/login?error=successpassword&alert=success";	
 	   }
 	   
 	   @GetMapping("/forgetpassword")
@@ -190,7 +211,7 @@ public class LoginController {
 			System.out.println("Take back Password Fail");
 			return "redirect:/forgetpassword?error=true&alert=danger";
 		}
-		   return "login";
+		   return "redirect:/login?error=successforgetpass&alert=success";
 	   }
 	    
 }

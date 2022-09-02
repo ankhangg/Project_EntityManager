@@ -35,10 +35,12 @@ import com.ankhang.entities.CategoryProduct;
 import com.ankhang.entities.Product;
 import com.ankhang.model.Account_Register;
 import com.ankhang.model.CategoryProductInput;
+import com.ankhang.model.ProductCart_Model;
 import com.ankhang.model.ProductInput;
 import com.ankhang.service.CategoryProductService;
 import com.ankhang.service.ProductService;
 import com.ankhang.validator.CategoryValidator;
+import com.ankhang.validator.ProductCartValidator;
 import com.ankhang.validator.ProductValidator;
 
 @Transactional
@@ -51,13 +53,13 @@ public class AdminController {
 	@Autowired
 	private ProductService productService;
 	
+
 	@Autowired
 	private ProductValidator productValidator;
 	
 	@Autowired
 	private CategoryValidator categoryValidator;
 	
-
 	
 	@InitBinder
 	public void myInitBinder(WebDataBinder dataBinder) {
@@ -109,11 +111,33 @@ public class AdminController {
 			System.out.println("Add Category Fail");
 			return "redirect:/addcategory?error=true&alert=danger";
 		}
-		   return "redirect:/showcate";
+		   return "redirect:/showcate?error=scaddcate&alert=success";
 	 }
 	 
 	 @GetMapping("/showcate")
-	 public String showallCategory(Model model) {
+	 public String showallCategory(Model model,    		
+			    @RequestParam(value = "error",defaultValue = "")String error,
+	    		@RequestParam(value = "alert",defaultValue = "") String alert) {
+	    	if ("scaddcate".equals(error)) {
+	    		model.addAttribute("alertmessage","Success: Add Category Success");
+			}
+	    	if ("success".equals(alert)) {
+				model.addAttribute("typealert","success");
+			}
+	    	
+	    	if ("scdeletecate".equals(error)) {
+	    		model.addAttribute("alertmessage","Success: Delete Category Success");
+			}
+	    	if ("dark".equals(alert)) {
+				model.addAttribute("typealert","dark");
+			}
+	    	
+	    	if ("scupdatecate".equals(error)) {
+	    		model.addAttribute("alertmessage","Success: Update Category Success");
+			}
+	    	if ("primary".equals(alert)) {
+				model.addAttribute("typealert","primary");
+			}
 		 List<CategoryProduct> CategoryProducts = categoryProductService.findAllCategory();
 		 model.addAttribute("listCategoryProducts",CategoryProducts);
 		 return "show_categoryform";
@@ -158,7 +182,7 @@ public class AdminController {
 			System.out.println("Delete Fail");
 			return "redirect:/deletecate?error=true&alert=danger";
 		}
-		   return "redirect:/showcate";
+		   return "redirect:/showcate?error=scdeletecate&alert=dark";
 	 }
 	 
 	 @RequestMapping(value = "/updatecategory", method = RequestMethod.GET)
@@ -195,9 +219,8 @@ public class AdminController {
 			   System.out.println("Update Success");
 		} else {
 			System.out.println("Update Fail");
-			return "redirect:/updatecategory?error=true&alert=danger";
 		}
-		   return "redirect:/showcate";
+		   return "redirect:/showcate?error=scupdatecate&alert=primary";
 	 }
 	 
 	 @RequestMapping(value = "/addproduct", method = RequestMethod.GET)
@@ -241,7 +264,7 @@ public class AdminController {
 				System.out.println("Add Product Fail");
 				return "redirect:/addproduct?error=true&alert=danger";
 			}
-			   return "redirect:/showproductadmin";
+			   return "redirect:/showproductadmin?error=scaddpro&alert=success";
 		 }
 		 
 		 
@@ -260,7 +283,29 @@ public class AdminController {
 		 }
 		 
 		 @GetMapping("/showproductadmin")
-		 public String showlistProduct(Model model) {
+		 public String showlistProduct(Model model,
+				 @RequestParam(value = "error",defaultValue = "")String error,
+		    		@RequestParam(value = "alert",defaultValue = "") String alert){
+		    	if ("scaddpro".equals(error)) {
+		    		model.addAttribute("alertmessage","Success: Add Product Success");
+				}
+		    	if ("success".equals(alert)) {
+					model.addAttribute("typealert","success");
+				}
+		    	
+		    	if ("scdeletepro".equals(error)) {
+		    		model.addAttribute("alertmessage","Success: Delete Product Success");
+				}
+		    	if ("dark".equals(alert)) {
+					model.addAttribute("typealert","dark");
+				}
+		    	
+		    	if ("scupdatecate".equals(error)) {
+		    		model.addAttribute("alertmessage","Success: Update Product Success");
+				}
+		    	if ("primary".equals(alert)) {
+					model.addAttribute("typealert","primary");
+				}
 			 List<Product> listProducts = productService.findAllProductWithCate();
 		        model.addAttribute("listProductForm",listProducts);
 		        return "show_productform";
@@ -303,7 +348,7 @@ public class AdminController {
 				System.out.println("Delete Fail");
 				return "redirect:/deleteproduct?error=true&alert=danger";
 			}
-			   return "redirect:/showproductadmin";
+			   return "redirect:/showproductadmin?error=scdeletepro&alert=dark";
 		 }
 	    
 		 @GetMapping("/updateproduct")
@@ -359,8 +404,7 @@ public class AdminController {
 				   System.out.println("Update Success");
 			} else {
 				System.out.println("Update Fail");
-				return "redirect:/updatecategory?error=true&alert=danger";
 			}
-			   return "redirect:/showproductadmin";
+			   return "redirect:/showproductadmin?error=scupdatecate&alert=primary";
 		 }
 }
