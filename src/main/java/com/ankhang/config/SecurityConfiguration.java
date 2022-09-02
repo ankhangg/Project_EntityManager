@@ -75,13 +75,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// 
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
 				.loginPage("/login")//
-				.defaultSuccessUrl("/home")//
+				.defaultSuccessUrl("/home?error=successlogin&alert=success")//
 				.failureUrl("/login?error=true&alert=danger")//
 				.usernameParameter("userName")//
 				.passwordParameter("passWord")
-				//.passwordParameter(encoder.encode("passWord"))
-				//.passwordParameter("password")//
-		        //.passwordParameter("{bcrypt}$2a$10$0xuAeiVTDkmQHawSUiTSG.36.PQ9amIV4BBWHZus5ov3VdELc8ADW")
 				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/home");
 
 	}

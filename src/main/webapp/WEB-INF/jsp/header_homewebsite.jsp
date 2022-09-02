@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<%@include file="taglib.jsp"%>
 
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +23,6 @@
                         </li>
                               <!--  Decentralization -->                                                                    
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        
                         <li class="nav-item"><a class="nav-link active" aria-current="page">Welcome: ${pageContext.request.userPrincipal.name}</a></li>
                         
                              <!-- Admin Function Start -->
@@ -42,13 +42,14 @@
                          </c:if>
                         <!-- End Login -->
                     </ul>
-                    <form class="d-flex">
+                    <form:form modelAttribute="formusername" action="showcart" method="GET" class="d-flex" enctype="multipart/form-data">
+                    <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
                         </button>
-                    </form>
+                    </form:form>
                 </div>
             </div>
         </nav>

@@ -38,4 +38,5 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     + "p.productDescription=?8 where p.productId =?9")
 	void updateProduct(String productName, Long productAmount, BigDecimal productPrice, byte[] productThumbnail, 
 			CategoryProduct categoryProduct, String modifiedBy, Date modifiDate, String productDescription, Long productId);
+	
 }

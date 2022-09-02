@@ -5,6 +5,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>PROJECT JPA WEBSITE</title>
+<style type="text/css">
+  .error{
+  color: red
+  }
+</style>
     <!-- css -->
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/decorator_homewebsite/css/styles.css"/> 
     <!-- Favicon-->
@@ -23,31 +28,52 @@
         <!-- Body Start-->
       <!-- Product section-->
         <section class="py-5">
+                            <c:if test="${not empty alertmessage}">
+							<div class="alert alert-${typealert }">${alertmessage }</div>
+						</c:if>
+                    <form:form modelAttribute="productcart" enctype="multipart/form-data" method="POST" action="addcart"> 
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="${pageContext.request.contextPath}/productImage?id=${detailProduct.productId}" alt="..." /></div>
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="${pageContext.request.contextPath}/productImage?id=${productcart.productId}"/></div>
                     <div class="col-md-6">
+
                         <div class="small mb-1"></div>
-                        <h1 class="display-5 fw-bolder">${detailProduct.productName }</h1>
+                        <h1 class="display-5 fw-bolder">${productcart.productCartName }</h1>
+                         <form:input path="productCartName" type="hidden" class="form-control"/>
                         <div class="fs-5 mb-5">
-                            <%-- <span class="text-decoration-line-through">${detailProduct.productPrice } vnđ</span> --%>
-                             <span>Price: ${detailProduct.productPrice } vnđ</span>
+                             <span>Price: ${productcart.productCartPrice } vnđ</span>
+                             <form:input path="productCartPrice" type="hidden" class="form-control"/>
                              <br>
-                             <span>Amount: ${detailProduct.productAmount }</span>
+                             <span>Amount: ${productcart.productCartAmount }</span>
+                              <form:input path="productCartAmount" type="hidden" class="form-control"/>
+                              <br>
+                             <span>Category: ${nameCate }</span>
                         </div>
-                        <p class="lead">${detailProduct.productDescription }</p>
+                        <p class="lead">${productcart.productCartDescription }</p>
+                        <!-- Not show on screen start -->
+								<div class="col">
+									<form:hidden path="userNameCart" 
+										value="${pageContext.request.userPrincipal.name}" />
+								</div> 
+							    <div class="col">
+                                     <form:input path="productId" type="hidden" class="form-control"/>
+								</div> 
+								<!-- Not show on screen end -->
                         <div class="d-flex">
-                            <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <form:input class="form-control text-center me-3" path="productCartNumber" type="number" value="1" style="max-width: 3rem" />
+                            <form:errors path="productCartNumber" class="error"/>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
-                                Add to cart
+                                Add To Cart
                             </button>
+                             </div>
+                          
                         </div>
                     </div>
-                </div>
             </div>
+             </form:form> 
         </section>
-        <!-- Related items section-->
+        <!-- Related items section Start-->
         <section class="py-5 bg-light">
             <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">Related products</h2>
@@ -74,6 +100,7 @@
                 </div>
             </div>
         </section>
+         <!-- Related items section End-->
          <!-- Body End-->
      <!--  Footer -->
             <jsp:include page="footer_homewebsite.jsp" />

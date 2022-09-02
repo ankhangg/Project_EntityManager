@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.ankhang.entities.CategoryProduct;
 import com.ankhang.model.CategoryProductInput;
 
-@Component
+
 public interface CategoryProductService {
   boolean saveCategoryProd(CategoryProductInput categoryProductInput);
   List<CategoryProduct> findAllCategory();
