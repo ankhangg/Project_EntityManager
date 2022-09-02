@@ -8,7 +8,7 @@ import com.ankhang.model.Account_ChangePassword;
 import com.ankhang.model.Account_ForgetPassword;
 import com.ankhang.model.Account_Register;
 
-@Component
+
 public interface AccountService {
 
 	 Account findAccountByUsername(String userName);
