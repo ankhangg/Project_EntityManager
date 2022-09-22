@@ -1,8 +1,8 @@
 package com.ankhang.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,9 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,34 +28,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Table(name = "Product",uniqueConstraints={@UniqueConstraint(columnNames={"prodname"})})
-@Table(name = "ProductCart")
-public class ProductCart {
+@Table(name = "Receipt")
+public class Receipt implements Serializable {
+	private static final long serialVersionUID = -5653187098228066118L;
 	
 	@Id
-	@Column(name = "prodcid")
+	@Column(name = "receiptid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Long productCartId;
-	
-	@Column(name = "prodcname", length = 100, nullable = true)
-	private String productCartName;
-	
-	@Column(name = "prodid")
-	private Long productId;
-	
-	@Column(name = "prodcprice",nullable = true) 
-	private BigDecimal productCartPrice;
-	
-	@Column(name = "prodcnumber",nullable = true)
-	private Long productCartNumber;
-	
-	@Column(name = "prodcsum",nullable = true) 
-	private BigDecimal productCartSum;
-	
-	@Column(name = "usernamecart", nullable = false)
-    private String userNameCart;
+	private Long receiptId;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	
+	@OneToOne(mappedBy = "receipt")
+	private ReceiptDetail receiptDetail;
+	
+	@Column(name = "username", nullable = true )
+	private String userName;
+	
+	@Column(name = "totalsum",nullable = false) 
+	private BigDecimal totalSum;
 }

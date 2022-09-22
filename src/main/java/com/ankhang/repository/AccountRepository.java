@@ -11,9 +11,12 @@ import com.ankhang.entities.Account;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, String> {
 	
-	    @Query("Select a from Account a where a.userName = ?1")
+       @Query("Select a from Account a where a.userName = ?1")
+	   // @Query("Select a from Account a left join fetch a.receipt where a.userName = ?1")
         Account findAccountByUsername(String userName);
 	    
+	   @Query("Select a from Account a where a.userName = ?1")
+	   Account findAccountByUsername02(String userName);
 
 		@Query("Select MAX (a.accId) from Account a")
 		Long findmaxId();

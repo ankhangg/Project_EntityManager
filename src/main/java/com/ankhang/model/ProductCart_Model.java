@@ -21,4 +21,6 @@ public class ProductCart_Model {
 	 private Long productCartNumber;
 	 
 	 private Long productId;
+	 
+	 
 }

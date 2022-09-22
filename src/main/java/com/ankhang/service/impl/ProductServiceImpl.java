@@ -153,5 +153,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
+	@Override
+	public void updateAmountProduct(Long amount, Long productId) {
+        productRepository.updateAmountProduct(amount, productId);
+	}
+
+
 
 }
