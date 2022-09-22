@@ -12,6 +12,7 @@ import com.ankhang.model.Account_Register;
 public interface AccountService {
 
 	 Account findAccountByUsername(String userName);
+	 Account findAccountByUsername02(String userName);
 	 Account_Info findAccountInfoByAccount(Account account);
 	 boolean saveAccount_Regist(Account_Register account_Register);
 	 boolean checkConfirmPassword(String passWord, String passWord2);

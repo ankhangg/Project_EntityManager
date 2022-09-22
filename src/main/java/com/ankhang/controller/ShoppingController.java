@@ -2,6 +2,8 @@ package com.ankhang.controller;
 
 import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,23 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.ankhang.entities.Account;
+import com.ankhang.entities.Account_Info;
 import com.ankhang.entities.CategoryProduct;
 import com.ankhang.entities.Product;
 import com.ankhang.entities.ProductCart;
+import com.ankhang.entities.Receipt;
 import com.ankhang.model.CategoryProductInput;
 import com.ankhang.model.FormUsername;
 import com.ankhang.model.ProductCart_Model;
 import com.ankhang.model.ProductInput;
+import com.ankhang.model.ReceiptCartDetailModel;
+import com.ankhang.repository.AccountInfoRepository;
+import com.ankhang.service.AccountService;
 import com.ankhang.service.CategoryProductService;
 import com.ankhang.service.ProductCartService;
 import com.ankhang.service.ProductService;
+import com.ankhang.service.ReceiptService;
 import com.ankhang.validator.ProductCartValidator;
 
 @Transactional
@@ -51,6 +60,13 @@ public class ShoppingController {
 	
 	@Autowired
 	private ProductCartValidator productCartValidator;
+	
+	@Autowired
+	private AccountService accountService;
+	
+	@Autowired
+	private ReceiptService receiptService;
+	
 	@InitBinder
 	public void myInitBinder(WebDataBinder dataBinder) {
 		  Object target = dataBinder.getTarget();
@@ -145,6 +161,9 @@ public class ShoppingController {
 		
 		BigDecimal sumCart = productCartService.findSumCartUser(formUsername.getUserName());
 		model.addAttribute("sumcart", sumCart);
+		
+		ProductCart_Model productCart_Model = new ProductCart_Model();
+		model.addAttribute("procartsub",productCart_Model);
 		return "cartuser";
 	}
 	
@@ -230,6 +249,57 @@ public class ShoppingController {
          return new ModelAndView("redirect:/showcart",modelMap);
 	}
 	
+	//@ModelAttribute("fullNameUser")
+	@GetMapping("/showcartselect")
+	public String submitCartpost(@RequestParam(value = "selectcart") Long[] selectcart,
+			@RequestParam(value = "username") String userName, Model model) {
+		FormUsername formUsername = new FormUsername();
+		model.addAttribute("formusername", formUsername);
+		
+		BigDecimal sumresult = new BigDecimal("0") ;
+		List<ProductCart> listCartofSelect = new ArrayList<ProductCart>();
+		for(Long valueL: selectcart) {
+			ProductCart productCart = productCartService.findProductCartUserSelect(userName, valueL);
+			BigDecimal sumCart = productCart.getProductCartSum();
+			listCartofSelect.add(productCart);
+			sumresult = sumresult.add(sumCart);
+		}
+		
+		Account account = accountService.findAccountByUsername(userName);
+		String fullNameUser = account.getAccount_Info().getLastName() + account.getAccount_Info().getFirstName();
+		
+		
+		ReceiptCartDetailModel pCartDetailModel = new ReceiptCartDetailModel();
+		pCartDetailModel.setUserName(userName);
+		pCartDetailModel.setListCartofSelect(listCartofSelect);
+		pCartDetailModel.setFullName(fullNameUser);
+		pCartDetailModel.setSumTotal(sumresult);
+		pCartDetailModel.setAddRess(account.getAccount_Info().getAddRess());
+		pCartDetailModel.setPhoneNumber(account.getAccount_Info().getPhoneNumber());
+		pCartDetailModel.setListidProductCart(selectcart);
+		model.addAttribute("receiptdetail",pCartDetailModel);
+		return "cartdetail";
+	}
+	
+//	@PostMapping("/showcartselect")
+//	@Transactional(propagation = Propagation.NEVER)
+//	public String addReceipt(Model model,@ModelAttribute("cartselect")  List<ProductCart> listProductCart01,
+//			@ModelAttribute("sumcartselect") BigDecimal sumTotal,
+//			@ModelAttribute("account") Account account,
+//			@ModelAttribute("fullnameuser") String fullName
+//			) {
+//		receiptService.saveReceipt(listProductCart01, sumTotal, account, fullName);
+//		return "";
+//	}
+	
+	@PostMapping("/showcartselect")
+	@Transactional(propagation = Propagation.NEVER)
+	public String addReceipt(Model model,
+			@ModelAttribute("receiptdetail") ReceiptCartDetailModel rDetailModel) {
+		receiptService.saveReceipt(rDetailModel);
+		return "";
+	}
+
 	
 
 	

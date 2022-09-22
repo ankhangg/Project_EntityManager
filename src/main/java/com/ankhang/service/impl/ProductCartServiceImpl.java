@@ -133,6 +133,8 @@ public class ProductCartServiceImpl implements ProductCartService {
 		}
 	}
 
-
-
+	@Override
+	public ProductCart findProductCartUserSelect(String userName, Long idCart) {
+		return productCartRepository.findCartByUserNameandSelect(userName, idCart);
+	}
 }

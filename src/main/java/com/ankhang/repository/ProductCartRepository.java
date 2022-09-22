@@ -32,4 +32,7 @@ public interface ProductCartRepository extends CrudRepository<ProductCart, Long>
 	@Query("select p from ProductCart p where p.userNameCart = ?1 ")
 	List<ProductCart> findCartByUserName(String userName);
 	
+	@Query("select p from ProductCart p where p.userNameCart = ?1 and p.productCartId = ?2")
+	ProductCart findCartByUserNameandSelect(String userName, Long idcart);
+	
 }

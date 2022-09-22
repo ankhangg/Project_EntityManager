@@ -13,4 +13,5 @@ public interface ProductCartService {
    ProductCart findProductCart(Long id);
    boolean updateProductCart(ProductCart_Model productCart_Model);
    void deleteProductCart(ProductCart productCart);
+   ProductCart findProductCartUserSelect(String userName, Long idCart);
 }

@@ -1,11 +1,14 @@
 package com.ankhang.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,4 +47,7 @@ public class Account implements Serializable {
 	 @OneToOne(mappedBy = "account")
 	private Account_Info account_Info;
 	 
+//		@OneToMany(cascade = CascadeType.ALL,orphanRemoval = false)
+//		@JoinColumn(name = "account_id")
+//		 private List<Receipt> receipt;
 }
