@@ -17,4 +17,5 @@ public interface ProductService {
   boolean deleteProduct(Product product);
   Product findByIdProductWithCate(Long id);
   boolean updateProduct(ProductInput productInput);
+  void updateAmountProduct(Long amount, Long productId);
 }

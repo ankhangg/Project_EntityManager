@@ -37,36 +37,43 @@
 		<c:if test="${not empty alertmessage}">
 			<div class="alert alert-${typealert }">${alertmessage }</div>
 		</c:if>
-		<form:form enctype="multipart/form-data" method="GET" action="showcartselect"> 
+		<form:form modelAttribute="receiptdetail" enctype="multipart/form-data" method="POST" action="showcartselect"> 
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Select</th>
 						<th>Product Name</th>
 						<th>Price</th>
 						<th>Number</th>
 						<th>Sum</th>
-						<th>Function</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${listcartuser }" var="l">
+					<c:forEach items="${receiptdetail.listCartofSelect }" var="l">
 						<tr>
-							<td><input class="form-check-input" type="checkbox" name="selectcart"  value ="${l.productCartId}" id="flexCheckDefault"></td>
 							<td scope="row">${l.productCartName }</td>
 							<td>${l.productCartPrice }</td>
 							 <td>${l.productCartNumber }</td> 
 							<td>${l.productCartSum }</td>
 							<td>
-		<a href="${pageContext.request.contextPath}/editcart?idcart=${l.productCartId}">Edit</a>
-        <a href="${pageContext.request.contextPath}/deletecart?idcart=${l.productCartId}">Delete</a>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-							<label for="validationDefault01">Sum Cart: ${sumcart }</label>
+			 <h5>----------INFORMATION USER----------</h5><br>
+			<label>Full Name: ${receiptdetail.fullName }</label><br>
+			<label>Phone Number: ${receiptdetail.phoneNumber }</label><br>
+			<label>Address: ${receiptdetail.addRess }</label><br><br>
+			 <h5>----------TOTAL CART----------</h5><br>
+			<label>Sum Cart: ${sumcartselect }</label><br>
 							 <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}">
+							  <form:input path="listCartofSelect" type="hidden" class="form-control"/>
+							   <form:input path="fullName" type="hidden" class="form-control"/>
+							    <form:input path="sumTotal" type="hidden" class="form-control"/>
+							     <form:input path="userName" type="hidden" class="form-control"/>
+							     <form:input path="addRess" type="hidden" class="form-control"/> 
+							     <form:input path="phoneNumber" type="hidden" class="form-control"/>  
+							      <form:input path="listidProductCart" type="hidden" class="form-control"/> 
 					<button type="submit" class="btn btn-primary">Submit</button>
 		</form:form>
 	</section>

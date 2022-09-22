@@ -39,4 +39,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	void updateProduct(String productName, Long productAmount, BigDecimal productPrice, byte[] productThumbnail, 
 			CategoryProduct categoryProduct, String modifiedBy, Date modifiDate, String productDescription, Long productId);
 	
+	@Modifying
+	@Transactional
+	@Query("update Product p set p.productAmount = ?1 where p.productId = ?2")
+	void updateAmountProduct(Long amount, Long prodId);
+	
 }

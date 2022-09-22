@@ -35,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public Account findAccountByUsername(String userName) {
-		Account account = entityManager.find(Account.class, userName);
+		Account account = accountRepository.findAccountByUsername(userName);
 		return account;
 	}
 
@@ -134,6 +134,12 @@ public class AccountServiceImpl implements AccountService {
 		e.printStackTrace();
 	}
 		return false;
+	}
+
+	@Override
+	public Account findAccountByUsername02(String userName) {
+		Account account = accountRepository.findAccountByUsername02(userName);
+		return account;
 	}
 
 
