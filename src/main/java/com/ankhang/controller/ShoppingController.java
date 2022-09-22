@@ -278,6 +278,7 @@ public class ShoppingController {
 		pCartDetailModel.setPhoneNumber(account.getAccount_Info().getPhoneNumber());
 		pCartDetailModel.setListidProductCart(selectcart);
 		model.addAttribute("receiptdetail",pCartDetailModel);
+		model.addAttribute("sumcartselect",sumresult);
 		return "cartdetail";
 	}
 	
