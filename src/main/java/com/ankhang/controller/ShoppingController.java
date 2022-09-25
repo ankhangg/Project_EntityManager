@@ -4,8 +4,10 @@ import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,11 +34,14 @@ import com.ankhang.entities.Account_Info;
 import com.ankhang.entities.CategoryProduct;
 import com.ankhang.entities.Product;
 import com.ankhang.entities.ProductCart;
+import com.ankhang.entities.ProductReceipt;
 import com.ankhang.entities.Receipt;
 import com.ankhang.model.CategoryProductInput;
 import com.ankhang.model.FormUsername;
 import com.ankhang.model.ProductCart_Model;
 import com.ankhang.model.ProductInput;
+import com.ankhang.model.ProductReceiptDetail_Model;
+import com.ankhang.model.ProductReceipt_Model;
 import com.ankhang.model.ReceiptCartDetailModel;
 import com.ankhang.repository.AccountInfoRepository;
 import com.ankhang.service.AccountService;
@@ -249,7 +254,6 @@ public class ShoppingController {
          return new ModelAndView("redirect:/showcart",modelMap);
 	}
 	
-	//@ModelAttribute("fullNameUser")
 	@GetMapping("/showcartselect")
 	public String submitCartpost(@RequestParam(value = "selectcart") Long[] selectcart,
 			@RequestParam(value = "username") String userName, Model model) {
@@ -268,7 +272,7 @@ public class ShoppingController {
 		Account account = accountService.findAccountByUsername(userName);
 		String fullNameUser = account.getAccount_Info().getLastName() + account.getAccount_Info().getFirstName();
 		
-		
+	
 		ReceiptCartDetailModel pCartDetailModel = new ReceiptCartDetailModel();
 		pCartDetailModel.setUserName(userName);
 		pCartDetailModel.setListCartofSelect(listCartofSelect);
@@ -282,17 +286,6 @@ public class ShoppingController {
 		return "cartdetail";
 	}
 	
-//	@PostMapping("/showcartselect")
-//	@Transactional(propagation = Propagation.NEVER)
-//	public String addReceipt(Model model,@ModelAttribute("cartselect")  List<ProductCart> listProductCart01,
-//			@ModelAttribute("sumcartselect") BigDecimal sumTotal,
-//			@ModelAttribute("account") Account account,
-//			@ModelAttribute("fullnameuser") String fullName
-//			) {
-//		receiptService.saveReceipt(listProductCart01, sumTotal, account, fullName);
-//		return "";
-//	}
-	
 	@PostMapping("/showcartselect")
 	@Transactional(propagation = Propagation.NEVER)
 	public String addReceipt(Model model,
@@ -301,7 +294,58 @@ public class ShoppingController {
 	   return "redirect:/home?error=receipt&alert=success";
 	}
 
+	@GetMapping("/listreceipt")
+	public String getListReceipt(Model model,
+			@RequestParam(value = "username") String userName) {
+    	FormUsername formUsername = new FormUsername();
+		model.addAttribute("formusername", formUsername);
+		
+		List<Receipt> listReceipt = receiptService.findlistReceiptbyUsername(userName);
+		model.addAttribute("listreceipt",listReceipt);
+		return "listreceipt";
+	}
 	
+	@PostMapping("/listreceipt")
+	public String postListReceipt() {
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/showreceipt")
+	public String showReceipt(Model model,
+			@RequestParam(value = "idreceipt") Long id) {
+    	FormUsername formUsername = new FormUsername();
+		model.addAttribute("formusername", formUsername);
+		
+		Receipt receipt = receiptService.findReceiptbyIdandUserName(id);
+
+		List<ProductReceipt_Model> list = new ArrayList<>();
+		for(ProductReceipt pReceipt: receipt.getReceiptDetail().getListproductReceipts()) {
+			ProductReceipt_Model pModel = new ProductReceipt_Model();
+			pModel.setProductCartSum(pReceipt.getProductCartSum());
+			pModel.setProductReceiptName(pReceipt.getProductReceiptName());
+			pModel.setProductReceiptNumber(pReceipt.getProductReceiptNumber());
+			pModel.setProductReceiptPrice(pReceipt.getProductReceiptPrice());
+			list.add(pModel);
+		}	
+		ProductReceiptDetail_Model receiptCartDetailModel = new ProductReceiptDetail_Model();
+		receiptCartDetailModel.setListProductReceipts(list);
+		receiptCartDetailModel.setFullName(receipt.getReceiptDetail().getFullName());
+		receiptCartDetailModel.setSumTotal(receipt.getTotalSum());
+		receiptCartDetailModel.setAddRess(receipt.getReceiptDetail().getAddRess());
+		receiptCartDetailModel.setPhoneNumber(receipt.getReceiptDetail().getPhoneNumber());
+		receiptCartDetailModel.setUserName(receipt.getUserName());
+		model.addAttribute("receipt",receiptCartDetailModel);
+
+		return "receiptdetail";
+	}
+	
+	@PostMapping("/showreceipt")
+	public ModelAndView showReceiptRedirect(@ModelAttribute("receipt") ProductReceiptDetail_Model pModel,ModelMap modelMap) {
+		String userName = pModel.getUserName();
+		modelMap.addAttribute("username",userName);
+		return new ModelAndView("redirect:/listreceipt",modelMap);
+	}
+
 
 	
 	
