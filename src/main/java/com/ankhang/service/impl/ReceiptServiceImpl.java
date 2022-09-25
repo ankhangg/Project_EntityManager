@@ -19,6 +19,7 @@ import com.ankhang.entities.ProductReceipt;
 import com.ankhang.entities.Receipt;
 import com.ankhang.entities.ReceiptDetail;
 import com.ankhang.model.ProductCart_Model;
+import com.ankhang.model.ProductReceiptDetail_Model;
 import com.ankhang.model.ReceiptCartDetailModel;
 import com.ankhang.repository.AccountInfoRepository;
 import com.ankhang.repository.AccountRepository;
@@ -99,6 +100,17 @@ public class ReceiptServiceImpl implements ReceiptService {
 		  }
 		
 	 }
+
+	@Override
+	public List<Receipt> findlistReceiptbyUsername(String userName) {
+		return receiptRepository.listReceiptsofUser(userName);
+	}
+
+	@Override
+	public Receipt findReceiptbyIdandUserName(Long id) {
+		return receiptRepository.findByReceiptId(id);
+	}
+
 
 
 }

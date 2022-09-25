@@ -61,7 +61,7 @@ public class ProductReceipt {
 	@Column(name = "receiptdtid",nullable = true) 
 	private Long receiptdtId;
 		
-	@ManyToMany(cascade =  CascadeType.ALL)
+	@ManyToMany(cascade =  CascadeType.PERSIST)
 	@JoinTable(
 			name = "prod_receiptdetail",
 			joinColumns = @JoinColumn(name = "prod_id"),
