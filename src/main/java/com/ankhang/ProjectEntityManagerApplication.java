@@ -28,6 +28,10 @@ public class ProjectEntityManagerApplication{
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectEntityManagerApplication.class, args);
+
+		
+		
+		
 	}
 	
 

@@ -298,7 +298,7 @@ public class ShoppingController {
 	public String addReceipt(Model model,
 			@ModelAttribute("receiptdetail") ReceiptCartDetailModel rDetailModel) {
 		receiptService.saveReceipt(rDetailModel);
-		return "";
+	   return "redirect:/home?error=receipt&alert=success";
 	}
 
 	
