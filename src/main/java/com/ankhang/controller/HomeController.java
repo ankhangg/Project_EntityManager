@@ -71,6 +71,9 @@ public class HomeController {
 	    	if ("danger".equals(alert)) {
 				model.addAttribute("typealert","danger");
 			}
+	    	if ("receipt".equals(error)) {
+	    		model.addAttribute("alertmessage","Success: Submit Receipt Success");
+			}
         String message = "Hello Spring Boot + JSP";
         model.addAttribute("message", message);
         List<Product> listProducts = productService.findAllProduct();
