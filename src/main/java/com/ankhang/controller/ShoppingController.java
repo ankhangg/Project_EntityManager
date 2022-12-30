@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -294,6 +296,7 @@ public class ShoppingController {
 	   return "redirect:/home?error=receipt&alert=success";
 	}
 
+	
 	@GetMapping("/listreceipt")
 	public String getListReceipt(Model model,
 			@RequestParam(value = "username") String userName) {

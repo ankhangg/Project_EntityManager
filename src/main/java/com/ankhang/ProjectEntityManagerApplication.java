@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -24,6 +25,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @EnableAutoConfiguration(exclude = { //  
 		 HibernateJpaAutoConfiguration.class
        })
+@EnableGlobalMethodSecurity(
+		  prePostEnabled = true, 
+		  securedEnabled = true )
 public class ProjectEntityManagerApplication{
 	
 	public static void main(String[] args) {
