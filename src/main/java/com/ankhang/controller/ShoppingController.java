@@ -1,16 +1,14 @@
 package com.ankhang.controller;
 
-import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,29 +21,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.ankhang.entities.Account;
-import com.ankhang.entities.Account_Info;
 import com.ankhang.entities.CategoryProduct;
 import com.ankhang.entities.Product;
 import com.ankhang.entities.ProductCart;
 import com.ankhang.entities.ProductReceipt;
 import com.ankhang.entities.Receipt;
-import com.ankhang.model.CategoryProductInput;
 import com.ankhang.model.FormUsername;
 import com.ankhang.model.ProductCart_Model;
-import com.ankhang.model.ProductInput;
 import com.ankhang.model.ProductReceiptDetail_Model;
 import com.ankhang.model.ProductReceipt_Model;
 import com.ankhang.model.ReceiptCartDetailModel;
-import com.ankhang.repository.AccountInfoRepository;
 import com.ankhang.service.AccountService;
 import com.ankhang.service.CategoryProductService;
 import com.ankhang.service.ProductCartService;
@@ -186,7 +176,15 @@ public class ShoppingController {
 			model.addAttribute("typealert","danger");
 		}
 		
-		ProductCart productCart = productCartService.findProductCart(id);
+		//how can get userName access
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		ProductCart productCart = productCartService.findProductCartAuthen(id,userName);
+		
+		//authen user
+		if(productCart == null) {
+			return "/403";
+		}
 		
 		ProductCart_Model productCart_Model = new ProductCart_Model();
 		productCart_Model.setProductCartId(id);
@@ -245,7 +243,17 @@ public class ShoppingController {
 	@GetMapping("/deletecart")
 	public ModelAndView deleteCartPost(@RequestParam(value = "idcart",defaultValue = "") Long id,
 			ModelMap modelMap){
-		 ProductCart productCart = productCartService.findProductCart(id);
+		//how can get userName access
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		 ProductCart productCart = productCartService.findProductCartAuthen(id,userName);
+		 
+			//authen user fail
+			if(productCart == null) {
+				//return "/403";
+				 return new ModelAndView("redirect:/403");
+			}
+		 
 		 String userNameCart = productCart.getUserNameCart();
 		 productCartService.deleteProductCart(productCart);
 		 
@@ -313,13 +321,21 @@ public class ShoppingController {
 		return "redirect:/home";
 	}
 	
+
 	@GetMapping("/showreceipt")
 	public String showReceipt(Model model,
 			@RequestParam(value = "idreceipt") Long id) {
     	FormUsername formUsername = new FormUsername();
 		model.addAttribute("formusername", formUsername);
 		
-		Receipt receipt = receiptService.findReceiptbyIdandUserName(id);
+		//how can get userName access
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		Receipt receipt = receiptService.findReceiptByIdAndUserName(id,userName);
+		// access error because try to get wrong access username
+		if(receipt == null) {
+			return "/403";
+		}
 
 		List<ProductReceipt_Model> list = new ArrayList<>();
 		for(ProductReceipt pReceipt: receipt.getReceiptDetail().getListproductReceipts()) {

@@ -8,6 +8,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -107,9 +110,17 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 
 	@Override
-	public Receipt findReceiptbyIdandUserName(Long id) {
-		return receiptRepository.findByReceiptId(id);
+	public Receipt findReceiptByIdAndUserName(Long id, String userName) {
+		// check receipt belong with userName or not
+		Receipt receipt = receiptRepository.findByReceiptId(id);
+	    if (receipt != null && receipt.getUserName().equals(userName)) {
+	        return receipt;
+	    }
+
+		return null;
 	}
+
+
 
 
 

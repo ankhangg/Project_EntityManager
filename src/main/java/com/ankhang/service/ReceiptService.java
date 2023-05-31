@@ -5,13 +5,10 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ankhang.entities.Account;
-import com.ankhang.entities.Account_Info;
-import com.ankhang.entities.ProductCart;
 import com.ankhang.entities.Receipt;
-import com.ankhang.model.ProductCart_Model;
-import com.ankhang.model.ProductReceiptDetail_Model;
 import com.ankhang.model.ReceiptCartDetailModel;
 
 public interface ReceiptService {
@@ -20,5 +17,6 @@ public interface ReceiptService {
    @PreAuthorize("#userName == authentication.principal.username")
    List<Receipt> findlistReceiptbyUsername(String userName);
    
-   Receipt findReceiptbyIdandUserName(Long id);
+   Receipt findReceiptByIdAndUserName(Long id, String userName);
+
 }

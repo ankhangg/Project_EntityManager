@@ -137,4 +137,13 @@ public class ProductCartServiceImpl implements ProductCartService {
 	public ProductCart findProductCartUserSelect(String userName, Long idCart) {
 		return productCartRepository.findCartByUserNameandSelect(userName, idCart);
 	}
+
+	@Override
+	public ProductCart findProductCartAuthen(Long id, String userName) {
+		ProductCart productCart =  productCartRepository.findProCartbyId(id);
+		if (productCart!=null && productCart.getUserNameCart().equals(userName)) {
+			return productCart;
+		}
+		return null;
+	}
 }
