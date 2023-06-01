@@ -20,6 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -75,8 +76,47 @@ public class ShoppingController {
 				dataBinder.setValidator(productCartValidator);
 			}
 	        }
-	@GetMapping("/addcart")
-	public String productCartDetail(Model model,@RequestParam(value = "idproduct", defaultValue = "0") Long id,
+//	@GetMapping("/addcart")
+//	public String productCartDetail(Model model,@RequestParam(value = "idproduct", defaultValue = "0") Long id,
+//    		@RequestParam(value = "error",defaultValue = "")String error,
+//    		@RequestParam(value = "alert",defaultValue = "") String alert) 
+//    {
+//		 model.addAttribute("error",error);
+//	    	model.addAttribute("alert",alert);
+//	    	if ("true".equals(error)) {
+//	    		model.addAttribute("alertmessage","Error: Fields can not be blank");
+//			}
+//	    	if ("danger".equals(alert)) {
+//				model.addAttribute("typealert","danger");
+//			}
+//	    	Product product = productService.findByIdProductWithCate(id);
+//	    	ProductCart_Model productCart_Model = new ProductCart_Model();
+//	    	productCart_Model.setProductCartId(id);
+//	    	productCart_Model.setProductCartName(product.getProductName());
+//	    	productCart_Model.setProductCartPrice(product.getProductPrice());
+//	    	productCart_Model.setProductCartAmount(product.getProductAmount());
+//	    	productCart_Model.setProductCartDescription(product.getProductDescription());
+//	    	productCart_Model.setProductId(id);
+//	    	
+//	    	CategoryProduct categoryProduct = categoryProductService.findCategorybyId((product.getCategoryProduct().getCateprodId()));
+//	    	String nameCate= categoryProduct.getCateprodName();
+//	    	
+//	    	model.addAttribute("nameCate",nameCate);
+//	    	model.addAttribute("productcart", productCart_Model);
+//	    	
+//	    	FormUsername formUsername = new FormUsername();
+//			model.addAttribute("formusername", formUsername);
+//	    	return "detailproduct_homewebsite";
+//    }
+	
+//Update to hide URL
+//@GetMapping("/addcart")
+//	public String productCartDetail(Model model,@RequestParam(value = "idproduct", defaultValue = "0") Long id,
+//	@RequestParam(value = "error",defaultValue = "")String error,
+//	@RequestParam(value = "alert",defaultValue = "") String alert) 
+//{
+	@GetMapping("/addcart/{idproduct}")
+	public String productCartDetail(Model model, @PathVariable("idproduct") Long id,
     		@RequestParam(value = "error",defaultValue = "")String error,
     		@RequestParam(value = "alert",defaultValue = "") String alert) 
     {
@@ -88,6 +128,7 @@ public class ShoppingController {
 	    	if ("danger".equals(alert)) {
 				model.addAttribute("typealert","danger");
 			}
+	    	
 	    	Product product = productService.findByIdProductWithCate(id);
 	    	ProductCart_Model productCart_Model = new ProductCart_Model();
 	    	productCart_Model.setProductCartId(id);
@@ -107,10 +148,12 @@ public class ShoppingController {
 			model.addAttribute("formusername", formUsername);
 	    	return "detailproduct_homewebsite";
     }
-		
-	@PostMapping("/addcart")
+	
+	//Update to hide URL
+	//@PostMapping("/addcart")
+	@PostMapping("/addcart/{idproduct}")	
 	@Transactional(propagation = Propagation.NEVER)
-	public String addCart(Model model,@ModelAttribute("productcart")@Validated ProductCart_Model productCart_Model,BindingResult result,final RedirectAttributes redirectAttributes) {
+	public String addCart(Model model,@ModelAttribute("productcart")@Validated ProductCart_Model productCart_Model,BindingResult result,final RedirectAttributes redirectAttributes) {	
 		if (productCart_Model.getUserNameCart().length()==0) {
        	 return "redirect:/login?error=errorcart&alert=danger";	
 	        }
@@ -134,8 +177,38 @@ public class ShoppingController {
           return "redirect:/home?error=true&alert=danger";		
 	}
 		
+//	@GetMapping("/showcart")
+//	public String homePost(Model model,@ModelAttribute("formusername") FormUsername formUsername,
+//    		@RequestParam(value = "error",defaultValue = "")String error,
+//    		@RequestParam(value = "alert",defaultValue = "") String alert){
+//		
+//		if ("editcardsc".equals(error)) {
+//    		model.addAttribute("alertmessage","Success: Edit Cart Success");
+//		}
+//    	if ("success".equals(alert)) {
+//			model.addAttribute("typealert","success");
+//		}
+//    	
+//		if ("deletecardsc".equals(error)) {
+//    		model.addAttribute("alertmessage","Success: Delete Cart");
+//		}
+//    	if ("danger".equals(alert)) {
+//			model.addAttribute("typealert","danger");
+//		}
+//    	
+//		List<ProductCart> listProductCart = productCartService.FindAllCartByUsername(formUsername.getUserName());
+//		model.addAttribute("listcartuser",listProductCart);
+//		
+//		BigDecimal sumCart = productCartService.findSumCartUser(formUsername.getUserName());
+//		model.addAttribute("sumcart", sumCart);
+//		
+//		ProductCart_Model productCart_Model = new ProductCart_Model();
+//		model.addAttribute("procartsub",productCart_Model);
+//		return "cartuser";
+//	}
+	
 	@GetMapping("/showcart")
-	public String homePost(Model model,@ModelAttribute("formusername") FormUsername formUsername,
+	public String homePost(Model model,
     		@RequestParam(value = "error",defaultValue = "")String error,
     		@RequestParam(value = "alert",defaultValue = "") String alert){
 		
@@ -153,10 +226,12 @@ public class ShoppingController {
 			model.addAttribute("typealert","danger");
 		}
     	
-		List<ProductCart> listProductCart = productCartService.FindAllCartByUsername(formUsername.getUserName());
+    	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    	
+		List<ProductCart> listProductCart = productCartService.FindAllCartByUsername(userName);
 		model.addAttribute("listcartuser",listProductCart);
 		
-		BigDecimal sumCart = productCartService.findSumCartUser(formUsername.getUserName());
+		BigDecimal sumCart = productCartService.findSumCartUser(userName);
 		model.addAttribute("sumcart", sumCart);
 		
 		ProductCart_Model productCart_Model = new ProductCart_Model();
@@ -164,11 +239,57 @@ public class ShoppingController {
 		return "cartuser";
 	}
 	
+//	@GetMapping("/editcart")
+//	public String editCart(Model model, @RequestParam(value = "idcart",defaultValue = "") Long id,
+//			@RequestParam(value = "error",defaultValue = "")String error,
+//    		@RequestParam(value = "alert",defaultValue = "") String alert){
+//
+//		if ("true".equals(error)) {
+//    		model.addAttribute("alertmessage","Error: Not Enough Amount To Add Cart");
+//		}
+//    	if ("danger".equals(alert)) {
+//			model.addAttribute("typealert","danger");
+//		}
+//		
+//		//how can get userName access
+//		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+//		
+//		ProductCart productCart = productCartService.findProductCartAuthen(id,userName);
+//		
+//		//authen user
+//		if(productCart == null) {
+//			return "/403";
+//		}
+//		
+//		ProductCart_Model productCart_Model = new ProductCart_Model();
+//		productCart_Model.setProductCartId(id);
+//		productCart_Model.setProductCartName(productCart.getProductCartName());
+//		productCart_Model.setProductCartPrice(productCart.getProductCartPrice());
+//		productCart_Model.setProductCartNumber(productCart.getProductCartNumber());
+//		productCart_Model.setProductCartSum(productCart.getProductCartSum());
+//		productCart_Model.setProductId(productCart.getProductId());
+//		
+//		Product product = productService.findByIdProduct(productCart.getProductId());
+//		productCart_Model.setProductCartAmount(product.getProductAmount());
+//		
+//		
+//		model.addAttribute("prodmodel",productCart_Model);
+//		
+//		
+//		FormUsername formUsername = new FormUsername();
+//		model.addAttribute("formusername", formUsername);
+//		return "update_cart";
+//	}
+	
+//	@GetMapping("/editcart")
+//	public String editCart(Model model, @RequestParam(value = "idcart",defaultValue = "") Long id,
+//			@RequestParam(value = "error",defaultValue = "")String error,
+//    		@RequestParam(value = "alert",defaultValue = "") String alert){
+	
 	@GetMapping("/editcart")
 	public String editCart(Model model, @RequestParam(value = "idcart",defaultValue = "") Long id,
 			@RequestParam(value = "error",defaultValue = "")String error,
     		@RequestParam(value = "alert",defaultValue = "") String alert){
-
 		if ("true".equals(error)) {
     		model.addAttribute("alertmessage","Error: Not Enough Amount To Add Cart");
 		}
@@ -205,6 +326,7 @@ public class ShoppingController {
 		model.addAttribute("formusername", formUsername);
 		return "update_cart";
 	}
+	
 	
 	/*------------------Option 1------------------*/
 //	@PostMapping("/editcart")
@@ -306,10 +428,11 @@ public class ShoppingController {
 
 	
 	@GetMapping("/listreceipt")
-	public String getListReceipt(Model model,
-			@RequestParam(value = "username") String userName) {
+	public String getListReceipt(Model model) {
     	FormUsername formUsername = new FormUsername();
 		model.addAttribute("formusername", formUsername);
+		
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		List<Receipt> listReceipt = receiptService.findlistReceiptbyUsername(userName);
 		model.addAttribute("listreceipt",listReceipt);

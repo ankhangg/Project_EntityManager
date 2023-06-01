@@ -158,6 +158,4 @@ public class ProductServiceImpl implements ProductService {
         productRepository.updateAmountProduct(amount, productId);
 	}
 
-
-
 }

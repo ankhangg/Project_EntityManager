@@ -30,7 +30,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	@Query("select p from Product p left join fetch p.categoryProduct where p.productId = ?1")
 	Product findProbyIdWithCate(Long prodId);
-	
+		
 	@Modifying
 	@Transactional
     @Query("update Product p set p.productName=?1, p.productAmount=?2, p.productPrice=?3, "

@@ -30,9 +30,10 @@
                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin">Admin Manage</a></li>
                             </security:authorize>
                              <!-- Admin Function End -->
-                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/updateif?username=${pageContext.request.userPrincipal.name}">Account Info</a></li>
+                             <%-- <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/updateif?username=${pageContext.request.userPrincipal.name}">Account Info</a></li> --%>
+                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/updateif">Account Info</a></li>
                              <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/updatepassword">Change Password</a></li>
-                              <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/listreceipt?username=${pageContext.request.userPrincipal.name}">Receipt</a></li>
+                              <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/listreceipt">Receipt</a></li>
                               <li class="nav-item"><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                               
                         </c:if>
@@ -43,14 +44,23 @@
                          </c:if>
                         <!-- End Login -->
                     </ul>
-                    <form:form modelAttribute="formusername" action="showcart" method="GET" class="d-flex" enctype="multipart/form-data">
+                   <%--  <form:form modelAttribute="formusername" action="showcart" method="GET" class="d-flex" enctype="multipart/form-data">
                     <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
                         </button>
+                    </form:form> --%>
+                    
+                     <form:form  action="showcart" method="GET" class="d-flex" enctype="multipart/form-data">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                        </button>
                     </form:form>
+                    
                 </div>
             </div>
         </nav>

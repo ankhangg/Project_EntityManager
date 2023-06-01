@@ -54,7 +54,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="${pageContext.request.contextPath}/addcart?idproduct=${p.productId}">View detail</a></div>
+                               <%--  <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="${pageContext.request.contextPath}/addcart?idproduct=${p.productId}">View detail</a></div> --%>
+                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="${pageContext.request.contextPath}/addcart/${p.productId}">View detail</a></div>
                             </div>
                         </div>
                          </div>

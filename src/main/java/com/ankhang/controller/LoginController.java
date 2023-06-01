@@ -1,6 +1,7 @@
 package com.ankhang.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -107,7 +108,7 @@ public class LoginController {
 	   }
 	   
 	   @RequestMapping(value = "/updateif", method = RequestMethod.GET)
-	    public String updateInfoAccount(@RequestParam(value = "username",defaultValue = "") String username,Model model,
+	    public String updateInfoAccount(Model model,
 	    		@RequestParam(value = "error",defaultValue = "")String error,
 	    		@RequestParam(value = "alert",defaultValue = "") String alert) 
 	   {
@@ -119,7 +120,8 @@ public class LoginController {
 	    	if ("danger".equals(alert)) {
 				model.addAttribute("typealert","danger");
 			}
-	    	Account thisAccount = accountService.findAccountByUsername(username);
+	    	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+	    	Account thisAccount = accountService.findAccountByUsername(userName);
 	    	Account_Info thisAccount_Info = null;
 	    	try {
 	    		thisAccount_Info = accountService.findAccountInfoByAccount(thisAccount);

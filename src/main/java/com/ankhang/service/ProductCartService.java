@@ -11,10 +11,15 @@ import com.ankhang.model.ProductCart_Model;
 public interface ProductCartService {
    boolean saveProductCart(ProductCart_Model productCart_Model);
    
-   @PreAuthorize("#userName == authentication.principal.username")
+   
+   
+   //@PreAuthorize("#userName == authentication.principal.username")
+   //Just authen when the user have login
+   @PreAuthorize("isAuthenticated() and (#userName == authentication.principal.username)")
    BigDecimal findSumCartUser(String userName);
    
-   @PreAuthorize("#userName == authentication.principal.username")
+   //@PreAuthorize("#userName == authentication.principal.username")
+   @PreAuthorize("isAuthenticated() and (#userName == authentication.principal.username)")
    List<ProductCart> FindAllCartByUsername(String userName);
    
    ProductCart findProductCart(Long id);
