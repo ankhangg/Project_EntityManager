@@ -72,8 +72,10 @@
         <td>${l.cateprodCode }</td>
           <td>${l.cateprodName }</td>
          <td>
-          <a href="${pageContext.request.contextPath}/updatecategory?idcategory=${l.cateprodId}">Edit</a>
-          <a href="${pageContext.request.contextPath}/deletecate?idcategory=${l.cateprodId}">Delete</a> 
+          <%-- <a href="${pageContext.request.contextPath}/updatecategory?idcategory=${l.cateprodId}">Edit</a> --%>
+         <%-- <a href="${pageContext.request.contextPath}/deletecate?idcategory=${l.cateprodId}">Delete</a> --%> 
+          <a href="${pageContext.request.contextPath}/updatecategory/${l.cateprodId}">Edit</a>
+          <a href="${pageContext.request.contextPath}/deletecate/${l.cateprodId}">Delete</a> 
          </td>
       </tr>
       </c:forEach>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -143,11 +144,15 @@ public class AdminController {
 		 return "show_categoryform";
 	 }
  
-	 @GetMapping("/deletecate")
-	 public String deleteCategory(Model model, @RequestParam(value = "idcategory", defaultValue = "0") Long id,
+//	 @GetMapping("/deletecate")
+//	 public String deleteCategory(Model model, @RequestParam(value = "idcategory", defaultValue = "0") Long id,
+//	    		@RequestParam(value = "error",defaultValue = "")String error,
+//	    		@RequestParam(value = "alert",defaultValue = "") String alert) 
+	 @GetMapping("/deletecate/{id}")
+	 public String deleteCategory(Model model, @PathVariable("id") Long id,
 	    		@RequestParam(value = "error",defaultValue = "")String error,
-	    		@RequestParam(value = "alert",defaultValue = "") String alert) 
-	   {
+	    		@RequestParam(value = "alert",defaultValue = "") String alert)   
+	 {
 	    	model.addAttribute("error",error);
 	    	model.addAttribute("alert",alert);
 	    	if ("true".equals(error) ) {
@@ -169,7 +174,7 @@ public class AdminController {
 		 return "delete_categoryform";
 	 }
 	 
-	 @PostMapping("/deletecate")
+	 @PostMapping("/deletecate/{id}")
 	 @Transactional(propagation = Propagation.NEVER)
 	 public String deleteCategoryPost(Model model, @ModelAttribute("categorydelete")@Validated CategoryProduct categoryProduct,BindingResult result,final RedirectAttributes redirectAttributes) {
 		   if (result.hasErrors()) {
@@ -185,11 +190,16 @@ public class AdminController {
 		   return "redirect:/showcate?error=scdeletecate&alert=dark";
 	 }
 	 
-	 @RequestMapping(value = "/updatecategory", method = RequestMethod.GET)
-		public String updatecategory(Model model, @RequestParam(value = "idcategory", defaultValue = "0") Long id,
+	 //update hide url
+//	 @RequestMapping(value = "/updatecategory", method = RequestMethod.GET)
+//		public String updatecategory(Model model, @RequestParam(value = "idcategory", defaultValue = "0") Long id,
+//	    		@RequestParam(value = "error",defaultValue = "")String error,
+//	    		@RequestParam(value = "alert",defaultValue = "") String alert) 
+	 @RequestMapping(value = "/updatecategory/{id}", method = RequestMethod.GET)
+		public String updatecategory(Model model, @PathVariable("id") Long id,
 	    		@RequestParam(value = "error",defaultValue = "")String error,
-	    		@RequestParam(value = "alert",defaultValue = "") String alert) 
-	   {
+	    		@RequestParam(value = "alert",defaultValue = "") String alert)  
+	 {
 	    	model.addAttribute("error",error);
 	    	model.addAttribute("alert",alert);
 	    	if ("true".equals(error)) {
@@ -209,7 +219,7 @@ public class AdminController {
 	         return "update_categoryform";
 	   }
 	 
-	 @RequestMapping(value = "/updatecategory", method = RequestMethod.POST)
+	 @RequestMapping(value = "/updatecategory/{id}", method = RequestMethod.POST)
 	 @Transactional(propagation = Propagation.NEVER)
 	 public String updatecategoryPost(Model model, @ModelAttribute("categoryupdate")@Validated CategoryProductInput categoryProductInput,BindingResult result,final RedirectAttributes redirectAttributes) {
 		   if (result.hasErrors()) {
